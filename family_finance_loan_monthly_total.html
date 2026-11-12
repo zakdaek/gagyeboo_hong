@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#122b50"><meta name="description" content="부부 실수령 월급, 월급 외 수입, 가계지출, 변동금리 대출, 예적금, 카드할부, 아파트 입주 준비 계약 및 현금흐름을 관리하는 모바일 반응형 가계 자산관리 대시보드">
+<title>우리집 자산관리</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif;color:#1b2939;background:#f4f7fb}*{box-sizing:border-box}body{margin:0}header{background:#122b50;color:white;padding:23px max(22px,calc((100% - 1160px)/2))}header h1{font-size:24px;margin:0 0 5px}header p{opacity:.82;margin:0;font-size:13px}.shell{max-width:1160px;margin:auto;padding:22px}.tabs{display:flex;gap:7px;overflow:auto;padding-bottom:12px}.tab{background:white;border:1px solid #dce4ef;border-radius:11px;padding:12px 18px;white-space:nowrap;cursor:pointer;font-weight:700;color:#4b6078}.tab.active{background:#155bd7;color:white;border-color:#155bd7}.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:white;border:1px solid #e0e7f0;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 3px 12px #102e5210}.card h2{margin:0 0 15px;font-size:18px}.card h3{margin:0 0 12px;font-size:15px;color:#52677f}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:12px;color:#52677f;font-weight:650}input,select{width:100%;border:1px solid #ced9e6;border-radius:9px;padding:11px;font:inherit;background:white;color:#1b2939}input:focus,select:focus{outline:2px solid #93baff}button{font:inherit;cursor:pointer}button.primary{background:#155bd7;color:white;border:0;border-radius:9px;padding:11px 17px;font-weight:700}button.subtle{border:1px solid #ccd9e8;background:white;color:#244c85;border-radius:8px;padding:7px 10px}button.danger{color:#b33333}.actions{display:flex;justify-content:flex-end;margin-top:13px;gap:8px}.kpi{padding:18px;border-radius:14px;background:white;border:1px solid #dfe8f2}.kpi span{font-size:13px;color:#5a6d81}.kpi strong{display:block;margin-top:8px;font-size:24px;letter-spacing:-.5px}.muted{color:#687b8c;font-size:13px}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:13px}th{text-align:left;color:#61748b;background:#f4f7fb;font-weight:700}th,td{padding:11px 10px;border-bottom:1px solid #eaf0f7}td.num{text-align:right;font-variant-numeric:tabular-nums}th.num{text-align:right}.empty{padding:20px;text-align:center;color:#8291a2}.tag{font-size:12px;background:#edf3fd;color:#255b9f;padding:3px 7px;border-radius:6px}.note{background:#eef5ff;border-left:3px solid #3981e8;padding:13px;color:#385b7a;font-size:13px;border-radius:7px;margin:14px 0}.bar-track{height:12px;border-radius:8px;background:#e7edf5;overflow:hidden}.bar-fill{height:100%;background:#3478e3}.chart{display:flex;align-items:flex-end;gap:11px;height:205px;overflow-x:auto;padding:22px 8px 0;border-bottom:1px solid #d9e4ef}.month{min-width:55px;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:5px}.column-pair{width:100%;height:158px;display:flex;align-items:flex-end;justify-content:center;gap:4px}.column{width:21px;border-radius:5px 5px 0 0;min-height:1px}.income{background:#2c79d2}.expense{background:#ec9a5b}.month small{font-size:11px;color:#607187}.legend{display:flex;gap:16px;align-items:center;font-size:12px}.dot{width:9px;height:9px;display:inline-block;border-radius:50%;margin-right:5px}.footer{color:#738498;text-align:center;font-size:12px;margin-top:24px}.salary-person{border:1px solid #e0e7f0;padding:16px;border-radius:12px;background:#fafcff}.pay-preview{margin-top:13px;border-top:1px solid #e0e7f0;padding-top:12px;font-size:13px;line-height:1.9}.pay-preview strong{font-size:19px;color:#1659ba}.year-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}.year-row select{max-width:145px}.year-status{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px;font-size:13px;color:#44607e}@media(max-width:600px){.shell{padding:14px}.card{padding:15px}header{padding:20px 16px}.kpi strong{font-size:21px}}@media print{.tabs,.actions,button{display:none!important}.panel{display:block!important}body{background:white}}
+
+/* ---- Responsive enhancement: desktop, tablet and mobile ---- */
+html {scroll-behavior:auto; -webkit-text-size-adjust:100%}
+body {min-width:0; overflow-x:clip}
+.shell,.panel,.card,.grid,.salary-person,.field,.kpi {min-width:0}
+.grid {grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.fields {grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr))}
+
+.card {overflow-wrap:break-word}
+.card h2,.card h3 {line-height:1.45; overflow-wrap:anywhere}
+.kpi strong {overflow-wrap:anywhere; line-height:1.25; font-variant-numeric:tabular-nums}
+.pay-preview,.note,.muted {overflow-wrap:anywhere}
+input,select,button {max-width:100%}
+button {touch-action:manipulation}
+.tab {display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:45px}
+.tab-short {display:none}
+.nav-icon {display:block;width:19px;height:19px;flex-shrink:0}
+.tab:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,.table-scroll:focus-visible,.chart:focus-visible {outline:3px solid #6fa7ff;outline-offset:2px}
+.table-scroll {width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:thin}
+.table-scroll table {min-width:max-content}
+.mobile-cards table {min-width:100%}
+#flowTable table {min-width:1130px}
+#flowTable th:first-child,#flowTable td:first-child {position:sticky;left:0;z-index:1;background:white;box-shadow:2px 0 5px #1b293912}
+#flowTable th:first-child {background:#f4f7fb;z-index:2}
+.schedule-table table {min-width:700px}
+.chart {max-width:100%;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:thin}
+.month {min-width:56px}
+.mobile-scroll-note {display:none}
+@media (max-width:900px) {
+ .shell {padding:18px}
+ .card {padding:18px}
+ .tabs {gap:5px}
+ .tab {padding:11px 13px}
+}
+@media (min-width:681px) and (max-width:760px) {
+ .tab {padding:10px 7px;gap:5px;font-size:13px}
+ .nav-icon {width:17px;height:17px}
+}
+@media (max-width:680px) {
+ :root {font-size:15px}
+ header {padding:20px 16px 18px}
+ header h1 {font-size:22px;line-height:1.3}
+ header p {font-size:12px;line-height:1.65}
+ .shell {padding:15px 12px calc(100px + env(safe-area-inset-bottom,0px));width:100%}
+ .year-status {font-size:12px;gap:5px;margin:0 0 13px;display:flex;flex-direction:column;align-items:flex-start;line-height:1.5}
+ .tabs {position:fixed;bottom:0;left:0;right:0;z-index:99;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;margin:0;padding:7px max(6px,env(safe-area-inset-right,0px)) calc(7px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px));background:#fff;border-top:1px solid #dbe5f1;box-shadow:0 -6px 22px #122b5015;overflow:visible}
+ .tab {min-width:0;min-height:56px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;border:0;border-radius:11px;padding:6px 1px;background:transparent;color:#65758b;font-size:11px;line-height:1.2;white-space:normal;text-align:center;font-weight:700;letter-spacing:-.3px}
+ .tab.active {background:#eaf2ff;color:#155bd7;border-color:transparent}
+ .tab-long {display:none}
+ .tab-short {display:block;white-space:nowrap}
+ .nav-icon {width:21px;height:21px}
+ .panel {min-width:0}
+ .grid {grid-template-columns:minmax(0,1fr);gap:12px}
+ #budgetKpi,#flowKpi,#loanList .grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ #flowKpi>.kpi:last-child {grid-column:span 2}
+ .card {padding:15px;border-radius:14px;margin-bottom:12px;box-shadow:0 2px 10px #102e520a}
+ .card h2 {font-size:17px;margin-bottom:12px}
+ .card h3 {font-size:15px}
+ .kpi {padding:13px 11px;border-radius:12px}
+ .kpi span {font-size:11px;line-height:1.5;display:block}
+ .kpi strong {font-size:clamp(15px,4.5vw,21px);letter-spacing:-.7px;margin-top:6px}
+ #flowKpi>.kpi:last-child strong {font-size:20px}
+ .fields {grid-template-columns:minmax(0,1fr);gap:11px}
+ 
+ .salary-person {padding:14px;border-radius:12px}
+ .field label {font-size:12px}
+ input,select {padding:12px 11px;min-height:46px;font-size:16px}
+ input[type=date],input[type=month] {min-width:0}
+ .year-row {flex-wrap:wrap;gap:9px;align-items:stretch}
+ .year-row label {flex:0 0 100%;font-weight:700}
+ .year-row select {max-width:none;flex:1 1 110px;width:auto}
+ .year-row button {flex:1 1 165px;min-height:46px;font-size:13px}
+ .actions {flex-direction:column;align-items:stretch;gap:9px;margin-top:12px}
+ .actions button {width:100%;min-height:46px}
+ .pay-preview {line-height:1.8}
+ .pay-preview strong {font-size:19px;display:inline-block}
+ 
+ 
+ .note {padding:12px;line-height:1.65}
+ .mobile-cards {overflow:visible;margin-top:11px}
+ .mobile-cards table,.mobile-cards tbody,.mobile-cards tr,.mobile-cards td {display:block;width:100%;min-width:0}
+ .mobile-cards thead {position:absolute;clip:rect(0 0 0 0);clip-path:inset(50%);height:1px;width:1px;overflow:hidden;white-space:nowrap}
+ .mobile-cards tbody {display:grid;gap:10px}
+ .mobile-cards tr {background:#f8fbff;border:1px solid #e1eaf5;border-radius:12px;padding:9px 12px}
+ .mobile-cards td,.mobile-cards td.num {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;white-space:normal;overflow-wrap:anywhere;text-align:right;padding:8px 0;font-size:13px;line-height:1.45;border-bottom:1px solid #e5ecf6}
+ .mobile-cards td::before {content:attr(data-label);display:block;flex:0 0 37%;max-width:37%;font-size:12px;font-weight:600;text-align:left;color:#61748b}
+ .mobile-cards td[data-label=""]::before {display:none}
+ .mobile-cards td:first-child {font-weight:750;font-size:14px;color:#1d3856}
+ .mobile-cards td:last-child {justify-content:flex-end;border-bottom:0;padding:11px 0 2px}
+ .mobile-cards td:last-child button {min-width:70px;min-height:42px}
+ .mobile-cards .empty {padding:16px}
+ .schedule-table::before,#flowTable::before {content:"표를 좌우로 밀어서 나머지 항목을 확인하세요 →";display:block;width:max-content;font-size:12px;color:#4f719d;padding:11px 0 6px}
+ .schedule-table th,.schedule-table td,#flowTable th,#flowTable td {padding:12px 9px}
+ .chart {height:200px;gap:9px;padding:17px 2px 0}
+ .month {min-width:60px}
+ .column-pair {height:153px}
+ .column {width:19px}
+ .mobile-scroll-note {display:block;margin:9px 0 5px;font-size:12px;color:#4f719d}
+ .footer {margin-top:20px;line-height:1.7}
+}
+@media (max-width:360px) {
+ .shell {padding-left:10px;padding-right:10px}
+ .tab {font-size:10px;letter-spacing:-.5px}
+ .nav-icon {height:19px;width:19px}
+ .kpi {padding:11px 8px}
+ .kpi strong {font-size:15px}
+}
+@media print {
+ .shell {padding:16px}
+ .tabs {display:none!important}
+ .mobile-scroll-note {display:none!important}
+ .mobile-cards table {display:table!important}
+ .mobile-cards thead {position:static;clip:auto;clip-path:none;height:auto;width:auto;overflow:visible;white-space:nowrap}
+ .mobile-cards tbody {display:table-row-group!important}
+ .mobile-cards tr {display:table-row!important}
+ .mobile-cards td {display:table-cell!important}
+ .mobile-cards td::before {display:none!important}
+}
+
+/* 변동금리 관리 영역 */
+.rate-history{border:1px solid #dbe5f1;border-radius:12px;background:#f8fbff;margin-top:16px;padding:13px}
+.rate-history>summary{cursor:pointer;font-size:14px;font-weight:750;color:#254d81;line-height:1.5;list-style-position:inside;padding:3px 0}
+.rate-history[open]>summary{margin-bottom:13px}
+.rate-history .fields{grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
+.rate-history .rate-explain{font-size:12px;color:#58718b;line-height:1.6;margin:4px 0 14px}
+.rate-history .actions{margin-top:9px}
+.rate-history .table-scroll{margin-top:14px}
+.rate-history table{background:white;min-width:650px}
+.rate-history table th,.rate-history table td{font-size:12px;padding:9px}
+.rate-history .mobile-cards table{min-width:100%}
+.rate-history .subtle{font-size:12px;white-space:nowrap}
+.rate-events-title{font-size:13px;font-weight:700;color:#3d5e83;margin:17px 0 7px}
+.rate-pill{display:inline-block;background:#edf6ee;color:#1a7449;border:1px solid #cce9d3;font-size:11px;border-radius:100px;padding:3px 9px;margin-left:6px}
+.rate-pill.base{background:#eef3fb;border-color:#d8e4f4;color:#4b6584}
+.rate-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.rate-kpis .kpi{padding:13px}
+.rate-kpis .kpi span{font-size:12px}
+.rate-kpis .kpi strong{font-size:18px}
+.product-list>.card{margin-bottom:13px}
+.rate-change-label{color:#5b7186;font-size:12px;line-height:1.65;margin-top:8px}
+@media(max-width:680px){
+ .rate-history{padding:12px 10px}
+ .rate-history .fields{grid-template-columns:minmax(0,1fr)}
+ .rate-history .table-scroll{overflow-x:auto}
+ .rate-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .rate-kpis .kpi:last-child{grid-column:span 2}
+ .rate-kpis .kpi strong{font-size:clamp(15px,4vw,18px)}
+ .rate-history>summary{font-size:13px}
+ .rate-events-title{font-size:12px}
+}
+@media print{.rate-history{break-inside:avoid}.rate-history .actions{display:none!important}}
+/* ---- Apartment move-in contract & payment planner ---- */
+.movein-intro{font-size:13px;line-height:1.65;color:#50647c;margin-top:0}
+.movein-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.movein-toolbar select{max-width:200px}
+.movein-form .fields{grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr))}
+.movein-form textarea{width:100%;max-width:100%;min-height:76px;resize:vertical;border:1px solid #ced9e6;border-radius:9px;padding:11px;font:inherit;color:inherit;background:#fff}
+.movein-form textarea:focus-visible{outline:3px solid #6fa7ff;outline-offset:2px}
+.movein-payment-list{display:grid;gap:12px;margin-top:12px}
+.movein-payment-row{background:#f7faff;border:1px solid #dce7f4;border-radius:13px;padding:15px;min-width:0}
+.movein-payment-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.movein-payment-head strong{font-size:14px;color:#254d81}
+.movein-payment-head button{font-size:12px}
+.movein-payment-row [hidden]{display:none!important}
+.movein-checkbox{display:flex;gap:9px;align-items:center;padding:10px 0;font-size:13px;color:#425e7c;line-height:1.5}
+.movein-checkbox input{width:17px;height:17px;min-height:0;flex:0 0 17px}
+.movein-payment-summary{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;border:1px dashed #bed4ef;padding:13px;border-radius:10px;background:#f8fbff;font-size:13px;color:#284b73}
+.movein-payment-summary b{font-size:18px;color:#173c68}
+.movein-status{display:inline-block;border:1px solid #d5e1f0;padding:3px 9px;border-radius:99px;font-size:11px;background:#f4f8ff;color:#355b84;font-weight:700;white-space:nowrap}
+.movein-status.done{background:#ecf8ef;border-color:#cce7d0;color:#1e7248}
+.movein-status.warn{background:#fff5e8;border-color:#f4d8a6;color:#a36211}
+.movein-status.cancel{background:#f0f1f4;border-color:#d9dce2;color:#656d7a}
+.movein-contract-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px}
+.movein-contract-head h3{margin:0 0 5px;font-size:16px;color:#1b3859}
+.movein-contract-head .muted{margin:0}
+.movein-contract-meta{display:flex;flex-wrap:wrap;gap:8px 13px;color:#5a718b;font-size:12px;margin:10px 0}
+.movein-contract-kpis{display:flex;flex-wrap:wrap;gap:7px 17px;margin:12px 0;font-size:13px;color:#466383}
+.movein-contract-kpis b{color:#203d61}
+.movein-contract-actions{display:flex;flex-wrap:wrap;gap:7px}
+.movein-contract-actions button{min-height:38px}
+.movein-details{margin-top:12px;border-top:1px solid #e3eaf4;padding-top:10px}
+.movein-details>summary{cursor:pointer;color:#28568b;font-size:13px;font-weight:750;line-height:1.6}
+.movein-stage{background:#f8fbff;border:1px solid #e3ecf6;border-radius:11px;margin-top:10px;padding:12px}
+.movein-stage-line{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.movein-stage-line b{color:#173c68}
+.movein-stage p{font-size:12px;color:#566d86;line-height:1.65;margin:7px 0}
+.movein-stage .subtle{font-size:12px;min-height:36px}
+.movein-timeline{display:grid;gap:8px;margin-top:8px}
+.movein-event{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;border:1px solid #e3ecf6;border-radius:11px;background:#fafcff;padding:12px}
+.movein-event .date{font-weight:750;color:#315b88;font-size:13px;white-space:nowrap}
+.movein-event .description{flex:1;min-width:0;font-size:13px;line-height:1.55;color:#375370}
+.movein-event .description strong{display:block;color:#223c5c;margin-bottom:2px}
+.movein-month-table table{min-width:670px}
+.movein-month-table td:first-child{font-weight:750}
+.movein-forecast-note{color:#6a7d90;font-size:12px;line-height:1.7}
+#moveInKpi{margin-bottom:16px}
+#moveInList>.card{margin-bottom:13px}
+@media(max-width:680px){
+ .tabs{grid-template-columns:repeat(6,minmax(0,1fr));padding-left:max(3px,env(safe-area-inset-left,0px));padding-right:max(3px,env(safe-area-inset-right,0px))}
+ .tab{font-size:10px;letter-spacing:-.5px;padding:6px 0}
+ .tab-short{white-space:normal;overflow-wrap:normal}
+ .nav-icon{width:20px;height:20px}
+ #moveInKpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ #moveInKpi .kpi{min-width:0}
+ .movein-form .fields{grid-template-columns:minmax(0,1fr)}
+ .movein-payment-row{padding:12px}
+ .movein-payment-summary{align-items:flex-start;flex-direction:column}
+ .movein-timeline .movein-event{flex-wrap:wrap;gap:5px}
+ .movein-event .date{width:100%}
+ .movein-contract-actions{width:100%}
+ .movein-contract-actions button{flex:1}
+ .movein-toolbar select{max-width:100%;width:100%}
+}
+@media(max-width:360px){.tab{font-size:9.5px}.nav-icon{width:18px;height:18px}}
+@media print{.movein-form,.movein-contract-actions,.movein-stage button{display:none!important}}
+
+@media(min-width:681px) and (max-width:960px){
+ .tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));overflow:visible;gap:6px}
+ .tab{min-width:0;padding:10px 4px;white-space:normal;line-height:1.2;gap:5px;font-size:12px}
+ .tab-long{overflow-wrap:anywhere}
+ .nav-icon{width:17px;height:17px}
+}
+.data-backup{background:#fcfdff}
+.data-backup>summary{cursor:pointer;font-size:13px;font-weight:700;color:#49627e}
+.data-backup[open]>summary{margin-bottom:13px}
+.data-backup .actions{justify-content:flex-start;flex-wrap:wrap}
+.data-backup input[type=file]{max-width:350px}
+
+
+/* ---- Other income: individual payments and monthly recurring receipts ---- */
+[hidden]{display:none!important}
+.other-income-card .muted{line-height:1.6}
+.other-income-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 14px;margin:15px 0;border-radius:10px;background:#eef7ff;border:1px solid #d4e8fa;color:#244d78;font-size:13px}
+.other-income-summary strong{color:#155bd7;font-size:19px;font-variant-numeric:tabular-nums}
+.other-income-card .field>.muted{font-size:11px}
+.other-income-card h3{margin-top:16px}
+.other-income-actions{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}
+.other-income-actions button{white-space:nowrap}
+.other-income-active{font-weight:750;color:#177647}
+@media(max-width:680px){.other-income-summary{align-items:flex-start}.other-income-actions{min-width:145px}}
+/* ---- Expense automation: source-linked schedules, never duplicate stored rows ---- */
+.budget-period{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin:1px 0 16px;flex-wrap:wrap}
+.budget-period h2{margin:0 0 4px;font-size:19px;color:#233e61}
+.budget-period .muted{margin:0;line-height:1.6}
+.budget-period-controls{display:flex;gap:8px;align-items:flex-end}
+.budget-period-controls .field{min-width:175px}
+.budget-period-controls .field span{font-size:12px;color:#52677f;font-weight:650}
+.budget-period-controls button{min-height:45px;white-space:nowrap}
+.auto-section-head{display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px;margin-bottom:10px}
+.auto-section-head h2{margin:0 0 4px}
+.auto-section-head .muted{margin:0;line-height:1.6}
+.auto-breakdown{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:12px 0 16px}
+.auto-breakdown-item{border:1px solid #dfe8f3;border-radius:10px;background:#f8fbff;padding:12px 10px;min-width:0}
+.auto-breakdown-item span{display:block;color:#5e7186;font-size:12px;margin-bottom:6px}
+.auto-breakdown-item strong{display:block;line-height:1.25;font-size:16px;color:#203c60;overflow-wrap:anywhere}
+.auto-breakdown-item.incoming{background:#eef9f4;border-color:#d1e9d9}
+.auto-breakdown-item.incoming strong{color:#147244}
+.auto-kind{display:inline-block;border:1px solid #dee7f0;color:#3a5d80;background:#eef5ff;padding:3px 7px;font-size:12px;border-radius:7px;white-space:nowrap}
+.auto-kind.incoming{background:#edf8ee;border-color:#cfe8d5;color:#1a754e}
+.auto-disclaimer{line-height:1.65;margin:15px 0 0}
+#autoExpenseList td.auto-amount.incoming{color:#197547;font-weight:750}
+#autoExpenseList td.auto-amount.outgoing{color:#9b4d22;font-weight:650}
+#autoExpenseList td.auto-source-detail{max-width:320px;white-space:normal;line-height:1.5}
+.budget-kpi-balance-negative strong{color:#ba3434}
+@media(max-width:920px){.auto-breakdown{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:680px){
+ .budget-period{align-items:stretch;gap:10px}
+ .budget-period h2{font-size:17px}
+ .budget-period-controls{width:100%}
+ .budget-period-controls .field{min-width:0;flex:1}
+ .budget-period-controls button{flex:0 0 95px;align-self:flex-end}
+ .auto-section-head .tag{font-size:11px}
+ .auto-breakdown{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .auto-breakdown-item{padding:10px}
+ .auto-breakdown-item strong{font-size:15px}
+ #autoExpenseList td.auto-source-detail{max-width:none}
+ #budgetKpi{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:360px){.budget-period-controls button{flex-basis:81px;font-size:12px}.auto-breakdown-item span{font-size:11px}}
+
+@media(max-width:680px){#flowKpi>.kpi:last-child{grid-column:auto}}
+
+.salary-month-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:12px 0;padding:12px 14px;border:1px solid #d8e5f3;border-radius:10px;background:#f1f7ff;font-size:13px;color:#345b82}
+.salary-month-meta strong{color:#174f9a;font-size:15px}
+.salary-history-title{margin-top:23px!important}
+.salary-monthly-card #salaryHistory{margin-bottom:12px}
+.salary-monthly-card #salaryHistory button{white-space:nowrap}
+@media(max-width:680px){.salary-month-meta{align-items:flex-start}.salary-monthly-card .actions{flex-wrap:wrap}.salary-monthly-card .actions button{flex-grow:1}}
+
+/* 월별 적용 내역 표기 */
+.monthly-list-summary{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:17px 0 13px;padding:12px 13px;border:1px solid #d7e6f6;border-radius:10px;background:#f0f7ff;color:#315b83;font-size:13px}
+.monthly-list-summary strong{color:#155bd7;font-size:17px;font-variant-numeric:tabular-nums}
+.monthly-expense-panels .card>.muted{line-height:1.6}
+.monthly-expense-panels .monthly-list-note{margin-top:13px;font-size:12px}
+.monthly-expense-panels h3{margin:18px 0 10px}
+@media(max-width:680px){.monthly-list-summary{align-items:flex-start}.monthly-expense-panels .actions{flex-wrap:wrap}}
+
+/* 대출 관리: 월별 전체 상환액 요약 */
+.loan-summary-card {background:linear-gradient(120deg,#eef5ff 0%,#fff 62%);border-color:#cbdffc}
+.loan-summary-head {display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:16px}
+.loan-summary-head h2 {margin:0 0 6px}
+.loan-summary-head p {margin:0;line-height:1.65}
+.loan-summary-controls {display:flex;align-items:flex-end;gap:8px}
+.loan-summary-controls .field {min-width:170px}
+.loan-summary-controls .field span {font-size:12px;font-weight:700;color:#52677f}
+.loan-summary-controls button {min-height:44px;white-space:nowrap}
+.loan-summary-grid {display:grid;grid-template-columns:minmax(0,1.45fr) repeat(2,minmax(0,1fr));gap:12px}
+.loan-summary-grid .kpi {min-width:0}
+.loan-summary-grid .loan-total-kpi {background:#155bd7;color:white;border-color:#155bd7}
+.loan-summary-grid .loan-total-kpi span {color:#eaf2ff}
+.loan-summary-grid .loan-total-kpi strong {font-size:clamp(23px,2.9vw,32px)}
+.loan-summary-foot {margin:13px 0 0;font-size:12px;color:#56718e;line-height:1.65}
+@media(max-width:680px) {
+ .loan-summary-head {gap:12px}
+ .loan-summary-controls {width:100%}
+ .loan-summary-controls .field {min-width:0;flex:1}
+ .loan-summary-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .loan-summary-grid .loan-total-kpi {grid-column:1/-1}
+ .loan-summary-grid .kpi strong {font-size:clamp(17px,4.6vw,22px)}
+ .loan-summary-grid .loan-total-kpi strong {font-size:clamp(24px,7vw,31px)}
+}
+</style></head>
+<body><header><h1>우리집 자산관리</h1><p>부부 소득 · 월급 외 수입 · 지출 · 대출 · 할부 · 금융상품 · 현금흐름 · 아파트 입주 준비 통합 관리</p></header>
+<main class="shell"><div class="year-status"><b id="systemDate" aria-live="polite"></b><span id="systemYearInfo"></span></div>
+<nav class="tabs" aria-label="메인 메뉴"><button type="button" class="tab active" data-tab="budget" aria-controls="budget" aria-current="page"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M15 15h3"/></svg><span class="tab-long">01 수입 · 지출</span><span class="tab-short">수입·지출</span></button><button type="button" class="tab" data-tab="loans" aria-controls="loans"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10l10-7 10 7M4 10h16M5 10v9m5-9v9m5-9v9m5-9v9M2 21h20"/></svg><span class="tab-long">02 대출 관리</span><span class="tab-short">대출</span></button><button type="button" class="tab" data-tab="cards" aria-controls="cards"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg><span class="tab-long">03 카드 할부</span><span class="tab-short">카드할부</span></button><button type="button" class="tab" data-tab="savings" aria-controls="savings"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6v12M15.5 9c-.7-1-1.7-1.4-3.3-1.4-1.7 0-3 .9-3 2.3 0 3 6 1.2 6 4.2 0 1.5-1.5 2.4-3.2 2.4-1.5 0-2.6-.5-3.4-1.5"/></svg><span class="tab-long">04 금융상품</span><span class="tab-short">금융상품</span></button><button type="button" class="tab" data-tab="flow" aria-controls="flow"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4v16h18M6.5 16l4.5-5 3.5 2.5L20 7"/></svg><span class="tab-long">05 현금흐름</span><span class="tab-short">현금흐름</span></button><button type="button" class="tab" data-tab="movein" aria-controls="movein"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10 12 3l9 7M5 9v12h14V9M9 21v-8h6v8"/><path d="M8 7V5"/></svg><span class="tab-long">06 아파트 입주 준비</span><span class="tab-short">입주준비</span></button></nav>
+<section id="budget" class="panel active">
+<div class="budget-period"><div><h2>월별 가계 수입 · 지출</h2><p class="muted">월급·월급 외 수입·고정비용·변동지출 목록과 대출·할부·예적금·입주 준비의 현금흐름을 조회 월에 맞춰 표시합니다.</p></div><div class="budget-period-controls"><label class="field" for="budgetMonth"><span>조회 월 (목록 필터)</span><input id="budgetMonth" type="month" aria-label="수입·지출 조회 월"></label><button id="budgetCurrentMonth" class="subtle" type="button">이번 달</button></div></div>
+<div class="grid" id="budgetKpi" aria-live="polite"></div>
+<div class="card salary-monthly-card"><h2>부부 월급 실수령액 · 월별 입력</h2>
+<p class="muted"><b>위의 조회 월을 먼저 선택</b>하고, 해당 월에 실제로 받은 실수령 월급을 입력하세요. <b>입력한 달에만 반영</b>되며 다른 달에는 자동 복사되지 않습니다. 아직 입력하지 않은 달의 월급은 0원으로 계산합니다.</p>
+<div class="salary-month-meta" id="salaryMonthMeta" aria-live="polite"></div>
+<form id="salaryForm"><div class="grid">
+<div class="salary-person"><h3>내 월급</h3><div class="field"><label for="mySalary">해당 월 내 실수령액 (원)</label><input id="mySalary" name="mine" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 3500000 (미입력 시 0원)"></div></div>
+<div class="salary-person"><h3>아내 월급</h3><div class="field"><label for="spouseSalary">해당 월 아내 실수령액 (원)</label><input id="spouseSalary" name="spouse" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 2800000 (미입력 시 0원)"></div></div>
+</div><div class="pay-preview" id="salaryPreview" aria-live="polite"></div>
+<div class="actions"><button id="salaryDeleteMonth" class="subtle danger" type="button" hidden>이 달 월급 삭제</button><button class="primary">선택한 달 월급 저장</button></div>
+<p id="salarySaveStatus" class="muted" aria-live="polite"></p>
+</form>
+<h3 class="salary-history-title">저장한 월별 월급</h3><div id="salaryHistory" class="table-scroll mobile-cards"></div>
+<p class="note">새 달이 되면 월급 입력란은 빈칸으로 시작하며, 저장하기 전에는 수입 0원으로 표시됩니다. 위의 조회 월에서 지난달을 선택해 급여를 확인하거나 수정할 수 있습니다. 이전 버전의 전체 달 적용 월급은 최초 실행 시 <b>현재 월 한 달</b>로만 이전합니다.</p></div>
+
+<div class="card other-income-card">
+ <h2>월급 외 수입 등록</h2>
+ <p class="muted">부업·상여금·임대료·지원금·환급금처럼 월급 외 통장에 들어오는 수입을 등록하세요. <b>실제 수령할 금액(세후)</b>을 입력하며, 일회성 또는 매월 반복 수입을 선택할 수 있습니다.</p>
+ <form id="otherIncomeForm">
+  <input type="hidden" name="id" value="">
+  <div class="fields">
+   <div class="field"><label for="otherIncomeName">수입 이름</label><input id="otherIncomeName" name="name" placeholder="예: 부업 수입, 성과급" maxlength="80" required></div>
+   <div class="field"><label for="otherIncomeCategory">수입 구분</label><select id="otherIncomeCategory" name="category"><option>부업·사업</option><option>상여금·성과급</option><option>임대 수입</option><option>배당·이자</option><option>지원금</option><option>환급·정산</option><option>용돈·증여</option><option>기타</option></select></div>
+   <div class="field"><label for="otherIncomeAmount">수입 금액 (원)</label><input id="otherIncomeAmount" name="amount" type="number" min="1" step="1" inputmode="numeric" placeholder="예: 300000" required></div>
+   <div class="field"><label for="otherIncomeDate">수입일 / 첫 수입일</label><input id="otherIncomeDate" name="date" type="date" required></div>
+   <div class="field"><label for="otherIncomeRepeat">반복 여부</label><select id="otherIncomeRepeat" name="repeat"><option value="once">일회성 수입</option><option value="monthly">매월 반복</option></select></div>
+   <div class="field" id="otherIncomeEndWrap" hidden><label for="otherIncomeEndMonth">반복 종료월 (선택)</label><input id="otherIncomeEndMonth" name="endMonth" type="month"><span class="muted">비워두면 매월 계속 반영</span></div>
+  </div>
+  <div class="actions"><button type="button" class="subtle" id="otherIncomeCancelEdit" hidden>수정 취소</button><button type="submit" class="primary" id="otherIncomeSubmit">월급 외 수입 추가</button></div>
+  <p id="otherIncomeStatus" class="muted" role="status" aria-live="polite"></p>
+ </form>
+ <div class="other-income-summary" id="otherIncomeSummary" aria-live="polite"></div>
+ <h3>조회 월에 해당하는 월급 외 수입</h3>
+ <div class="table-scroll mobile-cards" id="otherIncomeList"></div>
+ <p class="muted">매월 반복은 첫 수입월부터 종료월까지 매달 같은 금액을 반영합니다(31일 등 해당 날짜가 없는 달은 말일로 계산). 금융상품 만기금은 4번 메뉴에서 이미 자동 반영되므로 중복 등록하지 마세요.</p>
+</div>
+<div class="grid monthly-expense-panels">
+ <div class="card"><h2>고정비용 입력</h2>
+  <p class="muted">조회 월을 기준으로 고정비가 표시됩니다. 해당 월만 적용하거나 시작월부터 매월 반복하도록 선택하세요.</p>
+  <form id="fixedForm">
+   <input type="hidden" name="id" value="">
+   <div class="fields">
+    <div class="field"><label for="fixedName">비용이름</label><input id="fixedName" name="name" placeholder="예: 관리비" required></div>
+    <div class="field"><label for="fixedCategory">비용구분</label><select id="fixedCategory" name="category"><option>주거</option><option>통신</option><option>보험</option><option>교육</option><option>교통</option><option>생활</option><option>구독</option><option>기타</option></select></div>
+    <div class="field"><label for="fixedAmount">금액 (원)</label><input id="fixedAmount" name="amount" type="number" min="1" step="1" inputmode="numeric" required></div>
+    <div class="field"><label for="fixedStartMonth">적용 시작월</label><input id="fixedStartMonth" name="startMonth" type="month" required></div>
+    <div class="field"><label for="fixedRepeat">적용 방식</label><select id="fixedRepeat" name="repeat"><option value="monthly">매월 반복</option><option value="once">해당 월만</option></select></div>
+    <div class="field" id="fixedEndWrap"><label for="fixedEndMonth">반복 종료월 (선택)</label><input id="fixedEndMonth" name="endMonth" type="month"><span class="muted">빈칸이면 매월 계속 적용</span></div>
+   </div>
+   <div class="actions"><button class="subtle" type="button" id="fixedCancelEdit" hidden>수정 취소</button><button class="primary" type="submit" id="fixedSubmit">고정비용 추가</button></div>
+   <p class="muted" id="fixedStatus" role="status" aria-live="polite"></p>
+  </form>
+  <div class="monthly-list-summary" id="fixedSummary" aria-live="polite"></div>
+  <h3>조회 월 고정비용</h3>
+  <div class="table-scroll mobile-cards" id="fixedList"></div>
+  <p class="muted monthly-list-note">기존 버전에서 등록한 고정비는 시작월 정보가 없어 이전과 동일하게 매월 반복으로 표시합니다. 기간을 제한하려면 해당 항목의 수정 버튼을 사용하세요.</p>
+ </div>
+ <div class="card"><h2>변동지출 입력</h2>
+  <form id="variableForm"><div class="fields"><div class="field"><label>비용이름</label><input name="name" placeholder="예: 식료품" required></div><div class="field"><label>비용구분</label><select name="category"><option>식비</option><option>쇼핑</option><option>교통</option><option>의료</option><option>문화</option><option>여행</option><option>생활</option><option>기타</option></select></div><div class="field"><label>지출일</label><input name="date" type="date" required></div><div class="field"><label>금액 (원)</label><input name="amount" type="number" min="1" step="1" required></div></div><div class="actions"><button class="primary">변동지출 추가</button></div></form>
+  <p class="muted">변동지출은 지출일이 속한 달에만 반영되며, 조회 월의 항목만 아래 목록에 표시됩니다.</p>
+  <div class="monthly-list-summary" id="variableSummary" aria-live="polite"></div>
+  <h3>조회 월 변동지출</h3>
+  <div class="table-scroll mobile-cards" id="variableList"></div>
+ </div>
+</div>
+<div class="card auto-outflows-card">
+ <div class="auto-section-head"><div><h2>자동 반영 지출 · 금융상품 만기 수입</h2><p class="muted">2번 대출 · 3번 카드 할부 · 4번 금융상품 · 6번 입주 준비에 등록된 일정으로 생성됩니다. 별도 지출 등록은 필요하지 않습니다.</p></div><span class="tag">조회 월 기준 자동 계산</span></div>
+ <div class="auto-breakdown" id="autoBreakdown" aria-live="polite"></div>
+ <div class="table-scroll mobile-cards" id="autoExpenseList" aria-label="월별 자동 지출 및 금융상품 만기 예정 수입"></div>
+ <p class="muted auto-disclaimer">자동 내역은 각 원본 메뉴에서 수정하거나 삭제하면 즉시 갱신됩니다. 대출 상환·할부·적금 납입은 예정액이며 실제 결제 여부를 확인하지 않습니다. 적금·예금의 납입은 생활비 소비가 아닌 <b>자금 이동(현금유출)</b>이고 만기 수령액은 <b>세전 예상 현금유입</b>입니다.</p>
+</div></section>
+<section id="loans" class="panel">
+<div class="card loan-summary-card" aria-label="월별 전체 대출 상환금 요약">
+ <div class="loan-summary-head">
+  <div><h2>월별 대출 상환금 총액</h2><p class="muted">등록한 모든 대출의 해당 월 원금·이자 상환 예정액을 합산합니다. 변동금리 변경 내역도 자동 반영됩니다.</p></div>
+  <div class="loan-summary-controls"><label for="loanMonth" class="field"><span>상환금 조회 월</span><input type="month" id="loanMonth" aria-label="대출 상환금 조회 월"></label><button id="loanCurrentMonth" type="button" class="subtle">이번 달</button></div>
+ </div>
+ <div id="loanMonthlySummary" aria-live="polite" aria-atomic="true"></div>
+</div>
+<div class="card"><h2>대출 등록</h2><form id="loanForm"><div class="fields"><div class="field"><label>대출상품명</label><input name="name" required placeholder="예: 주택담보대출"></div><div class="field"><label>대출원금 (원)</label><input name="principal" type="number" min="1" step="1" required></div><div class="field"><label>대출시작일</label><input name="start" type="date" required></div><div class="field"><label>상환기간 (개월)</label><input name="term" type="number" min="1" max="600" step="1" required></div><div class="field"><label>연 금리 (%)</label><input name="rate" type="number" min="0" max="100" step="0.001" required></div><div class="field"><label>상환방식</label><select name="method"><option value="equal">원리금균등</option><option value="principal">원금균등</option><option value="bullet">만기일시상환</option></select></div></div><div class="actions"><button class="primary">대출 추가</button></div></form><p class="note">상환일은 대출시작일의 다음 달 같은 날부터로 가정합니다(해당 일자가 없는 달은 말일). 최초 금리를 등록한 후 상품별 「금리 변경 등록·이력」에서 금리 적용일과 변경 금리를 입력할 수 있습니다. 적용일부터 이자를 구간별로 나누고 남은 원금·잔여 회차로 향후 월 납입금을 다시 계산합니다. 연체·중도상환·수수료는 반영하지 않은 추정치이며 실제 은행 방식과 다를 수 있습니다.</p></div><div id="loanList"></div></section>
+<section id="cards" class="panel"><div class="card"><h2>카드 할부 등록</h2><form id="cardForm"><div class="fields"><div class="field"><label>구매내역</label><input name="name" placeholder="예: 가전제품" required></div><div class="field"><label>카드명</label><input name="card" placeholder="예: OO카드" required></div><div class="field"><label>총 할부금액 (원)</label><input name="amount" type="number" min="1" step="1" required></div><div class="field"><label>첫 청구월</label><input name="start" type="month" required></div><div class="field"><label>할부 개월 수</label><input name="months" type="number" min="1" max="120" step="1" required></div></div><div class="actions"><button class="primary">할부 추가</button></div></form><p class="muted">무이자 할부를 기준으로 월별 금액을 나눕니다. 유이자 할부 수수료는 포함하지 않습니다.</p></div><div class="card"><h2>할부 현황</h2><div class="table-scroll mobile-cards" id="cardList"></div></div></section>
+<section id="savings" class="panel"><div class="card"><h2>예금 · 적금 · 금융상품 등록</h2><form id="savingsForm"><div class="fields"><div class="field"><label>상품명</label><input name="name" placeholder="예: 목돈마련 적금" required></div><div class="field"><label>상품구분</label><select name="kind"><option value="installment">적금</option><option value="deposit">예금</option><option value="other">기타</option></select></div><div class="field"><label>금액 (원)</label><input name="amount" type="number" min="1" step="1" required></div><div class="field"><label>시작일</label><input name="start" type="date" required></div><div class="field"><label>만기일</label><input name="end" type="date" required></div><div class="field"><label>연 금리 (%)</label><input name="rate" type="number" min="0" max="100" step="0.001" value="0" required></div><div class="field"><label>이자 계산 방식</label><select name="interestType"><option value="simple">단리</option><option value="monthly">복리 (월복리)</option><option value="annual">연복리</option></select></div></div><div class="actions"><button class="primary">상품 추가</button></div></form><div class="note" id="savingsPreview" aria-live="polite">상품 정보 입력 시 예상 만기금이 표시됩니다.</div><p class="muted">상품 등록 후 「금리 변경 등록·이력」에서 적용일과 새 금리를 추가하면 금리 적용 기간별로 예상 이자를 다시 계산합니다. 적금은 만기일 전까지 매월 같은 날 납입하며 금리가 변해도 약정 월 납입원금은 그대로 유지합니다. 단리는 일할 계산, 월복리·연복리는 구간별 복리 계수를 곱한 추정치입니다. 세금·우대금리·은행별 약관·반올림은 반영하지 않습니다. <b>월별 납입액은 자동 현금유출로, 만기 예상 수령액은 만기월의 예상 현금유입으로 자동 반영</b>합니다(세전 금액).</p></div><div class="card"><h2>금융상품 목록</h2><div class="product-list" id="savingsList"></div></div></section>
+<section id="flow" class="panel"><div class="card"><h2>우리 집 현금흐름</h2><div class="year-row"><label for="flowYear">조회연도</label><select id="flowYear"></select></div><div class="grid" id="flowKpi"></div><h3 style="margin-top:24px">월별 수입 · 유출 비교</h3><div class="legend"><span><i class="dot income"></i>총 유입(월별 입력 급여 + 월급 외 수입 + 예상 만기 수령액)</span><span><i class="dot expense"></i>총 유출</span></div><p class="muted mobile-scroll-note">그래프를 좌우로 밀어 12개월 전체를 확인하세요.</p><div aria-label="월별 수입 유출 막대그래프, 좌우로 스크롤 가능" class="chart" id="flowChart" role="region" tabindex="0"></div><p class="muted">급여는 입력한 월에만 반영되며 미입력 월은 0원으로 계산합니다. 월급 외 반복 수입은 등록한 기간 동안 발생한다고 가정합니다. 대출 원리금, 카드 할부, 적금 월 납입·예금 예치와 입주 준비의 현금·카드 청구액은 자동으로 현금유출에, 예·적금의 세전 예상 만기금은 만기월 현금유입에 반영됩니다. 원본과 1번 메뉴에 중복 등록하지 마세요. 실제 납입·만기 수령 여부, 세금, 연체 및 은행 정산액은 확인하지 않은 예상 현금흐름입니다. 결제수단·납부월 미정인 입주 비용은 제외하며 과거 급여 변경이력은 관리하지 않으며, 고정비는 등록한 적용 기간에 따라 계산합니다(기존 등록 고정비는 매월 반복). 월급 외 수입은 등록한 일자 또는 반복 일정 기준입니다.</p></div><div class="card"><h2>월별 상세 내역</h2><div class="table-scroll" id="flowTable" role="region" aria-label="월별 상세 현금흐름 표, 좌우로 스크롤 가능" tabindex="0"></div></div></section>
+<section id="movein" class="panel" aria-label="아파트 입주 준비">
+<div class="card"><h2>아파트 입주 준비 · 계약 및 지출 관리</h2><p class="movein-intro">중문·시스템에어컨·가전·가구·입주청소·이사·등기처럼 입주 전 준비할 계약을 관리합니다. 한 계약의 <b>계약금·중도금·잔금</b>을 각각 등록하고, 지급 단계별로 현금·카드 일시불·카드 할부·미정 중 결제수단을 선택할 수 있습니다.</p><p class="note">아파트 입주 비용은 <b>6번 메뉴에서만 입력</b>하세요. 3번 카드할부나 1번 변동지출에 같은 금액을 중복 등록하면 전체 현금흐름에 이중 반영됩니다. 카드할부는 첫 청구월부터 반영하고, 미정이거나 지급일/첫 청구월을 입력하지 않은 금액은 월별 현금흐름에서 제외합니다.</p></div>
+<div class="grid" id="moveInKpi" aria-live="polite"></div>
+<div class="card"><h2>계약·납부·시공 일정</h2><div id="moveInTimeline"></div></div>
+<div class="card"><h2 id="moveInFormTitle">입주 계약 항목 등록</h2>
+<form id="moveInForm" class="movein-form"><input type="hidden" name="id" value="">
+<div class="fields">
+<div class="field"><label for="moveInName">계약/준비 항목명 *</label><input id="moveInName" name="name" placeholder="예: 거실 중문 설치" maxlength="100" required></div>
+<div class="field"><label for="moveInCategory">구분</label><select id="moveInCategory" name="category"><option>옵션·시공</option><option>가구·가전</option><option>이사·청소</option><option>세금·등기</option><option>생활·서비스</option><option>기타</option></select></div>
+<div class="field"><label for="moveInVendor">업체/담당자 (선택)</label><input id="moveInVendor" name="vendor" placeholder="예: OO인테리어" maxlength="100"></div>
+<div class="field"><label for="moveInContractDate">계약 예정/체결일 (선택)</label><input id="moveInContractDate" name="contractDate" type="date"></div>
+<div class="field"><label for="moveInWorkDate">시공·배송·입주 일정 (선택)</label><input id="moveInWorkDate" name="workDate" type="date"></div>
+<div class="field"><label for="moveInStatus">진행 상태</label><select id="moveInStatus" name="status"><option value="planned">계약 예정</option><option value="contracted">계약 완료</option><option value="complete">진행 완료</option><option value="canceled">취소</option></select></div>
+</div>
+<div class="field" style="margin-top:12px"><label for="moveInMemo">메모 (선택)</label><textarea id="moveInMemo" name="memo" maxlength="700" placeholder="견적 비교, 연락처, 계약 조건, 설치 위치 등 기록"></textarea></div>
+<h3 style="margin-top:22px">지급 일정과 결제수단</h3>
+<p class="muted">각 지급 단계에 금액을 입력하면 합계가 계약 총액이 됩니다. 아직 일정이나 결제수단이 확정되지 않았다면 비워두거나 ‘미정’을 선택해 두었다가 수정할 수 있습니다.</p>
+<div id="moveInPaymentEntries" class="movein-payment-list"></div>
+<div class="actions" style="justify-content:flex-start"><button type="button" class="subtle" id="moveInAddPayment">+ 지급 단계 추가 (계약금·잔금 등)</button></div>
+<div id="moveInDraftSummary" class="movein-payment-summary" aria-live="polite"></div>
+<div class="actions"><button type="button" id="moveInCancelEdit" class="subtle" hidden>수정 취소</button><button type="submit" id="moveInSaveButton" class="primary">입주 계약 저장</button></div>
+</form>
+</div>
+<div class="card"><h2>입주 비용 월별 지출 계획</h2><div class="year-row"><label for="moveInYear">조회연도</label><select id="moveInYear"></select></div>
+<p class="movein-forecast-note">현금은 지급 예정일이 포함된 월에, 카드는 첫 청구월부터 반영합니다. 할부는 무이자 할부 가정으로 금액을 나누며 마지막 달에 원 단위 차액을 보정합니다. 카드 수수료·할부이자·실제 카드사 청구일은 반영하지 않습니다.</p>
+<div id="moveInMonthly" class="table-scroll movein-month-table" tabindex="0" role="region" aria-label="입주비용 월별 예정 지출표, 좌우 스크롤 가능"></div>
+</div>
+<div class="card"><h2>계약 항목 목록</h2><div class="movein-toolbar"><label class="field" style="flex:1;max-width:250px"><span style="font-size:12px;font-weight:700;color:#52677f">진행 상태 필터</span><select id="moveInFilter"><option value="all">전체</option><option value="planned">계약 예정</option><option value="contracted">계약 완료</option><option value="complete">진행 완료</option><option value="canceled">취소</option></select></label></div></div>
+<div id="moveInList"></div>
+</section>
+
+<details class="card data-backup"><summary>전체 데이터 백업 · 복원 (기기 변경 및 파일 업데이트용)</summary>
+<p class="muted">현재 브라우저에 저장된 월급·월급 외 수입·지출·대출·카드·예적금·입주 계약 데이터를 하나의 JSON 파일로 백업할 수 있습니다. 새 기기나 다른 HTML 파일에서는 백업 파일을 선택해 복원하세요. 복원하면 현재 파일에서 사용 중인 데이터가 백업 내용으로 <b>교체</b>됩니다.</p>
+<div class="actions"><button type="button" class="subtle" id="backupExport">전체 데이터 JSON 백업</button></div>
+<div class="field" style="margin-top:16px"><label for="backupImport">복원할 JSON 파일 선택</label><input type="file" id="backupImport" accept=".json,application/json"></div>
+<div class="actions"><button type="button" class="primary" id="backupRestore">선택한 백업 파일 복원</button></div>
+<p class="muted" id="backupStatus" aria-live="polite"></p>
+</details>
+
+<div class="footer">저장 위치: 현재 브라우저의 로컬 저장소 · 은행/카드사 자동연동 없음 · 개인 재무관리 참고용</div></main>
+<script>
+'use strict';
+const KEY='family-finance-v1';
+let today=new Date();const pad=n=>String(n).padStart(2,'0');const isoLocal=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;let currentMonth=`${today.getFullYear()}-${pad(today.getMonth()+1)}`;
+const empty=()=>({salaryByMonth:{},otherIncome:[],fixed:[],variable:[],loans:[],cards:[],savings:[],moveIn:[]});
+// 구버전 전역 급여는 입력일 기록이 없으므로 처음 실행한 현재 월에만 1회 이관합니다.
+function migrateMonthlySalary(data,month){
+ const original=data.salaryByMonth;
+ const history=original&&typeof original==='object'&&!Array.isArray(original)?original:{};
+ const cleaned={};
+ const goodAmount=value=>Number.isSafeInteger(Number(value))&&Number(value)>=0;
+ for(const [key,record] of Object.entries(history)){
+  if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(key)||!record||typeof record!=='object')continue;
+  if(goodAmount(record.mine)&&goodAmount(record.spouse))cleaned[key]={mine:Number(record.mine),spouse:Number(record.spouse)};
+ }
+ const legacy=data.salary;
+ let migrated=false;
+ if(legacy&&typeof legacy==='object'&&!Object.keys(cleaned).length){
+  const net=person=>{
+   const amount=legacy[person];
+   if(goodAmount(amount))return Number(amount);
+   const config=legacy[person+'Config'];
+   return config?.mode==='net'&&goodAmount(config.amount)?Number(config.amount):0;
+  };
+  const mine=net('mine'),spouse=net('spouse');
+  if(mine||spouse)cleaned[month]={mine,spouse};
+  migrated=true;
+ }
+ data.salaryByMonth=cleaned;
+ if(Object.prototype.hasOwnProperty.call(data,'salary')){delete data.salary;migrated=true}
+ return migrated;
+}
+let db;try{
+ db=Object.assign(empty(),JSON.parse(localStorage.getItem(KEY)||'{}'));
+ for(const k of ['otherIncome','fixed','variable','loans','cards','savings','moveIn'])if(!Array.isArray(db[k]))db[k]=[];
+ if(migrateMonthlySalary(db,currentMonth))localStorage.setItem(KEY,JSON.stringify(db));
+}catch{db=empty()}
+const won=n=>Math.round(n||0).toLocaleString('ko-KR')+'원';const number=n=>Number(n)||0;const sum=a=>a.reduce((x,y)=>x+y,0);const uid=()=>globalThis.crypto?.randomUUID?.()||`${Date.now()}-${Math.random()}`;
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const save=()=>{localStorage.setItem(KEY,JSON.stringify(db));render()};
+// 월급은 (연도-월) 키별로만 저장·조회합니다. 다른 달로 자동 이월하지 않습니다.
+const salaryMonthLabel=month=>`${month.slice(0,4)}년 ${Number(month.slice(5))}월`;
+const salaryRecord=month=>Object.prototype.hasOwnProperty.call(db.salaryByMonth||{},month)?db.salaryByMonth[month]:null;
+function storedNet(month,person){const value=Number(salaryRecord(month)?.[person]);return Number.isSafeInteger(value)&&value>=0?value:0}
+let displayedSalaryMonth='';
+function showSalaryMonth(month){
+ if(displayedSalaryMonth===month)return;
+ displayedSalaryMonth=month;
+ const row=salaryRecord(month);
+ document.getElementById('mySalary').value=row?String(row.mine):'';
+ document.getElementById('spouseSalary').value=row?String(row.spouse):'';
+ document.getElementById('salarySaveStatus').textContent='';
+ renderSalaryPreview();
+}
+function renderSalaryPreview(){
+ const mine=Math.max(0,number(document.getElementById('mySalary').value));
+ const spouse=Math.max(0,number(document.getElementById('spouseSalary').value));
+ const month=displayedSalaryMonth||currentMonth;
+ document.getElementById('salaryPreview').innerHTML=`<span class="muted">${safe(month)} 입력 중인 실수령액 합계 (저장 후 해당 월에만 반영)</span> <strong>${won(mine+spouse)}</strong>`;
+}
+function renderSalaryHistory(month){
+ const saved=Boolean(salaryRecord(month));
+ document.getElementById('salaryMonthMeta').innerHTML=`<strong>${safe(salaryMonthLabel(month))} 급여 입력</strong><span>${saved?'이 달 월급 저장됨':'미입력 · 급여 0원으로 계산 중'}</span>`;
+ document.getElementById('salaryDeleteMonth').hidden=!saved;
+ const rows=Object.entries(db.salaryByMonth||{}).filter(([key])=>/^\d{4}-(0[1-9]|1[0-2])$/.test(key)).sort(([a],[b])=>b.localeCompare(a)).map(([key,row])=>
+  `<tr><td>${safe(key)}</td><td class="num">${won(row.mine)}</td><td class="num">${won(row.spouse)}</td><td class="num">${won(number(row.mine)+number(row.spouse))}</td><td><button class="subtle" type="button" data-salary-month="${safe(key)}">조회 · 수정</button></td></tr>`);
+ document.getElementById('salaryHistory').innerHTML=table(['입력 월','내 월급','아내 월급','합계','관리'],rows);
+ enhanceMobileTables();
+}
+function rebuildYears(oldYear){
+ const flow=document.getElementById('flowYear');
+ const chosen=Number(flow.value)||oldYear||today.getFullYear();
+ const max=Math.max(2032,today.getFullYear()+8),min=Math.min(2020,today.getFullYear()-5);
+ flow.innerHTML=Array.from({length:max-min+1},(_,i)=>max-i).map(y=>`<option value="${y}">${y}년</option>`).join('');
+ flow.value=String(chosen);
+}
+function refreshClock(){
+ const now=new Date(),oldDate=isoLocal(today),oldYear=today.getFullYear(),oldMonth=currentMonth;
+ today=now;
+ currentMonth=isoLocal(now).slice(0,7);
+ const budgetMonthInput=document.getElementById('budgetMonth');
+ if(budgetMonthInput&&budgetMonthInput.value===oldMonth)budgetMonthInput.value=currentMonth;
+ const loanMonthInput=document.getElementById('loanMonth');
+ if(loanMonthInput&&loanMonthInput.value===oldMonth)loanMonthInput.value=currentMonth;
+ document.getElementById('systemDate').textContent=`시스템 날짜 ${now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'})}`;
+ document.getElementById('systemYearInfo').textContent=`현재 ${now.getFullYear()}년 · 날짜에 따라 대출/할부/현금흐름 자동 재계산`;
+ if(oldDate!==isoLocal(now)){
+  if(oldMonth!==currentMonth)syncBudgetDraftMonths();
+  if(oldYear!==now.getFullYear()){
+   const flow=document.getElementById('flowYear');
+   const followsFlow=Number(flow.value)===oldYear;
+   const moveYear=document.getElementById('moveInYear');
+   const followsMove=Number(moveYear.value)===oldYear;
+   rebuildYears(oldYear);
+   rebuildMoveInYears(oldYear);
+   if(followsFlow)flow.value=String(now.getFullYear());
+   if(followsMove)moveYear.value=String(now.getFullYear());
+  }
+  document.querySelector('#variableForm [name=date]').value=isoLocal(now);
+  document.querySelector('#cardForm [name=start]').value=currentMonth;
+  render();
+ }
+}
+
+const ym=(y,m)=>`${y}-${pad(m)}`;const monthIndex=s=>{const [y,m]=s.slice(0,7).split('-').map(Number);return y*12+m-1};
+const monthAt=(s,offset)=>{const index=monthIndex(s)+offset;return ym(Math.floor(index/12),index%12+1)};
+function addMonthsDate(start,offset){const [y,m,d]=start.split('-').map(Number);const index=y*12+(m-1)+offset;const year=Math.floor(index/12),month=index%12;const last=new Date(year,month+1,0).getDate();return `${year}-${pad(month+1)}-${pad(Math.min(d,last))}`}
+// 날짜는 YYYY-MM-DD (로컬 화면)로 표현하고, 이자 일수는 UTC 기준으로 셉니다.
+function utcDay(d){return new Date(`${d}T00:00:00Z`).getTime()}
+function validIsoDate(d){return /^\d{4}-\d{2}-\d{2}$/.test(String(d))&&Number.isFinite(utcDay(d))&&new Date(utcDay(d)).toISOString().slice(0,10)===d}
+function daySpan(from,to){return Math.max(0,(utcDay(to)-utcDay(from))/86400000)}
+function maturityDate(item){return item.term?addMonthsDate(item.start,number(item.term)):item.end}
+function rateChanges(item){
+ const end=maturityDate(item),canEnd=Boolean(item.term);
+ return (Array.isArray(item.rateChanges)?item.rateChanges:[])
+  .filter(c=>validIsoDate(c.date)&&c.date>item.start&&(canEnd?c.date<=end:c.date<end)&&Number.isFinite(Number(c.rate))&&Number(c.rate)>=0&&Number(c.rate)<=100)
+  .map(c=>({id:String(c.id||c.date),date:c.date,rate:Number(c.rate)}))
+  .sort((a,b)=>a.date.localeCompare(b.date));
+}
+function rateAt(item,date){let rate=number(item.rate);for(const event of rateChanges(item)){if(event.date<=date)rate=event.rate;else break}return rate}
+// [start,end) 구간에서 금리 변경일을 경계로 이자 적용 기간을 구분합니다.
+function rateSegments(item,start,end){
+ if(!validIsoDate(start)||!validIsoDate(end)||end<=start)return [];
+ const cuts=[start,...rateChanges(item).map(c=>c.date).filter(d=>d>start&&d<end),end];
+ return cuts.slice(0,-1).map((from,i)=>({from,to:cuts[i+1],days:daySpan(from,cuts[i+1]),rate:rateAt(item,from)}));
+}
+// 상환 회차 중간에 금리가 변경된 경우, 해당 회차의 구간별 이자를 계산합니다.
+// 기본 월 이자 = 기초 잔액 × 연이율 / 12, 중간 변경 시 실제 일수 비율로 분할합니다.
+function schedule(l){
+ const P=number(l.principal),n=Math.trunc(number(l.term)),a=[];
+ if(P<=0||n<=0||!validIsoDate(l.start))return a;
+ const changes=rateChanges(l);
+ let balance=P,previous=l.start,regular=0;
+ for(let i=1;i<=n;i++){
+  const date=addMonthsDate(l.start,i),segments=rateSegments(l,previous,date);
+  const days=daySpan(previous,date);
+  const interest=days?balance*sum(segments.map(s=>s.rate/1200*s.days/days)):0;
+  const changed=changes.some(c=>c.date>previous&&c.date<=date);
+  const remainingMonths=n-i+1;
+  if(l.method!=='bullet'&&l.method!=='principal'&&(i===1||changed)){
+   const r=rateAt(l,date)/1200;
+   const later=remainingMonths-1;
+   // 첫 회에는 변경 전·후의 일할 혼합이자를 적용하고, 이후 회차는 신규 금리로 상환합니다.
+   const laterPV=r?(-Math.expm1(-later*Math.log1p(r)))/r:later;
+   regular=balance*(1+(balance?interest/balance:0))/(1+laterPV);
+  }
+  let principal;
+  if(l.method==='bullet')principal=i===n?balance:0;
+  else if(l.method==='principal')principal=i===n?balance:Math.min(balance,P/n);
+  else principal=i===n?balance:Math.min(balance,Math.max(0,regular-interest));
+  principal=Math.max(0,principal);balance=Math.max(0,balance-principal);
+  a.push({date,interest,principal,payment:interest+principal,balance,rate:rateAt(l,date),changed});
+  previous=date;
+ }
+ return a;
+}
+function cardAmount(c,month){const ix=monthIndex(month)-monthIndex(c.start),n=number(c.months);if(ix<0||ix>=n)return 0;const total=number(c.amount);const base=Math.floor(total/n);return base+(ix===n-1?total-base*n:0)}
+function savingsDates(s){
+ if(!validIsoDate(s.start)||!validIsoDate(s.end)||s.end<=s.start)return [];
+ if(s.kind!=='installment')return [s.start];
+ const dates=[];
+ for(let i=0;i<1200;i++){
+  const d=addMonthsDate(s.start,i);
+  if(d>=s.end)break; // 만기 당일은 추가 납입일로 계산하지 않습니다.
+  dates.push(d);
+ }
+ return dates;
+}
+function savingsFactor(s,depositDate,asOfDate){
+ const spans=rateSegments(s,depositDate,asOfDate),kind=s.interestType||'simple';
+ if(kind==='simple')return 1+sum(spans.map(p=>p.rate/100*p.days/365));
+ return spans.reduce((v,p)=>{
+  const r=p.rate/100;
+  return v*(kind==='monthly'?Math.pow(1+r/12,12*p.days/365):Math.pow(1+r,p.days/365));
+ },1);
+}
+// atDate를 지정하면 그 날까지 납입한 원금/발생 추정이자만 계산합니다.
+function savingsEstimate(s,atDate=s.end){
+ if(!validIsoDate(s.start)||!validIsoDate(s.end)||s.end<=s.start)return null;
+ const amount=number(s.amount),r=Number(s.rate);
+ if(amount<=0||!Number.isFinite(r)||r<0||r>100)return null;
+ const cutoff=atDate&&atDate<s.end?atDate:s.end;
+ if(!validIsoDate(cutoff)||cutoff<s.start)return null;
+ const deposits=savingsDates(s).filter(d=>d<=cutoff);
+ const principal=amount*deposits.length;
+ const maturity=sum(deposits.map(d=>amount*savingsFactor(s,d,cutoff)));
+ return {principal,interest:maturity-principal,maturity,count:deposits.length};
+}
+function renderSavingsPreview(){
+ const f=document.getElementById('savingsForm'),o=Object.fromEntries(new FormData(f)),v=savingsEstimate(o),el=document.getElementById('savingsPreview');
+ el.textContent=v?`예상 납입원금 ${won(v.principal)} · 예상 세전 이자 ${won(v.interest)} · 예상 만기 수령액 ${won(v.maturity)} (${v.count}회 납입)`:'상품 정보(금액, 시작일, 만기일)를 입력하면 예상 수령액이 표시됩니다.';
+}
+function savingsPayment(s,month){
+ if(s.kind==='installment')return savingsDates(s).some(date=>date.slice(0,7)===month)?number(s.amount):0;
+ return month===s.start.slice(0,7)?number(s.amount):0;
+}
+/* ===== 아파트 입주 계약 및 분할 납부 관리 ===== */
+const moveInStatusName={planned:'계약 예정',contracted:'계약 완료',complete:'진행 완료',canceled:'취소'};
+const moveInPayName={cash:'현금·계좌이체',card:'카드 일시불',installment:'카드 할부',undecided:'결제수단 미정'};
+const validMonth=s=>/^\d{4}-(0[1-9]|1[0-2])$/.test(String(s||''));
+function moveInPayments(contract){return Array.isArray(contract.payments)?contract.payments:[]}
+function moveInScheduled(p){
+ if(p.method==='cash')return validIsoDate(p.dueDate);
+ if(['card','installment'].includes(p.method))return validMonth(p.billingStart);
+ return false;
+}
+function moveInMonthly(month){
+ const result={cash:0,card:0,installment:0,undecided:0,total:0};
+ for(const c of db.moveIn){
+  if(c.status==='canceled')continue;
+  for(const p of moveInPayments(c)){
+   const amount=number(p.amount);
+   if(amount<=0)continue;
+   if(p.method==='cash'&&p.dueDate?.slice(0,7)===month)result.cash+=amount;
+   else if(p.method==='card'&&p.billingStart===month)result.card+=amount;
+   else if(p.method==='installment'&&validMonth(p.billingStart)&&number(p.months)>=1)result.installment+=cardAmount({amount,start:p.billingStart,months:p.months},month);
+   else if(p.method==='undecided'&&p.dueDate?.slice(0,7)===month)result.undecided+=amount;
+  }
+ }
+ result.total=result.cash+result.card+result.installment;
+ return result;
+}
+function moveInTotal(c){return sum(moveInPayments(c).map(p=>number(p.amount)))}
+function moveInPaymentTemplate(p={}){
+ const method=moveInPayName[p.method]?p.method:'undecided';
+ const selected=key=>key===method?'selected':'';
+ return `<div class="movein-payment-row" data-payment-entry data-payment-id="${safe(p.id||uid())}">
+ <div class="movein-payment-head"><strong>지급 단계</strong><button type="button" class="subtle danger" data-pay-remove>단계 삭제</button></div>
+ <div class="fields">
+ <div class="field"><label>지급 구분 *</label><input name="phase" maxlength="50" placeholder="예: 계약금 / 잔금 / 전액" value="${safe(p.phase||'전액')}" required></div>
+ <div class="field"><label>금액 (원) *</label><input name="amount" type="number" min="1" max="999999999999" step="1" inputmode="numeric" value="${safe(p.amount||'')}" placeholder="예: 1500000" required></div>
+ <div class="field"><label>지급·카드 결제 예정일</label><input name="dueDate" type="date" value="${safe(p.dueDate||'')}"></div>
+ <div class="field"><label>결제수단</label><select name="method"><option value="undecided" ${selected('undecided')}>미정 (현금흐름 미반영)</option><option value="cash" ${selected('cash')}>현금·계좌이체</option><option value="card" ${selected('card')}>카드 일시불</option><option value="installment" ${selected('installment')}>카드 할부</option></select></div>
+ <div class="field" data-card-field hidden><label>카드명 (선택)</label><input name="cardName" maxlength="60" value="${safe(p.cardName||'')}" placeholder="예: OO카드"></div>
+ <div class="field" data-card-field hidden><label>첫 카드 청구월</label><input name="billingStart" type="month" value="${safe(p.billingStart||'')}"></div>
+ <div class="field" data-installment-field hidden><label>할부 개월 수</label><input name="months" type="number" min="1" max="120" step="1" value="${safe(p.months||3)}"></div>
+ </div><label class="movein-checkbox"><input type="checkbox" name="paid" ${p.paid?'checked':''}><span>지급/카드 결제 처리 완료 <small class="muted">(할부의 모든 청구 완료를 뜻하지 않음)</small></span></label>
+ </div>`;
+}
+function syncMoveInPaymentRow(row){
+ const method=row.querySelector('[name=method]').value;
+ const isCard=method==='card'||method==='installment';
+ row.querySelectorAll('[data-card-field]').forEach(el=>el.hidden=!isCard);
+ row.querySelectorAll('[data-installment-field]').forEach(el=>el.hidden=method!=='installment');
+ const months=row.querySelector('[name=months]');
+ months.required=method==='installment';
+ // 실제 청구월은 카드사/결제일에 따라 다르므로 사용자 입력으로만 결정합니다.
+}
+function addMoveInPayment(p){
+ const list=document.getElementById('moveInPaymentEntries');
+ list.insertAdjacentHTML('beforeend',moveInPaymentTemplate(p));
+ syncMoveInPaymentRow(list.lastElementChild);
+ updateMoveInDraft();
+}
+function updateMoveInDraft(){
+ const rows=[...document.querySelectorAll('#moveInPaymentEntries [data-payment-entry]')];
+ const amounts=rows.map(row=>({amount:Math.max(0,number(row.querySelector('[name=amount]').value)),method:row.querySelector('[name=method]').value}));
+ const total=sum(amounts.map(x=>x.amount));
+ const cash=sum(amounts.filter(x=>x.method==='cash').map(x=>x.amount));
+ const card=sum(amounts.filter(x=>['card','installment'].includes(x.method)).map(x=>x.amount));
+ const undecided=sum(amounts.filter(x=>x.method==='undecided').map(x=>x.amount));
+ document.getElementById('moveInDraftSummary').innerHTML=`<span>등록 예정 총액 <b>${won(total)}</b></span><span>현금 ${won(cash)} · 카드 ${won(card)} · 수단 미정 ${won(undecided)}</span>`;
+}
+function resetMoveInForm(){
+ const form=document.getElementById('moveInForm');form.reset();
+ form.querySelector('[name=id]').value='';
+ document.getElementById('moveInFormTitle').textContent='입주 계약 항목 등록';
+ document.getElementById('moveInSaveButton').textContent='입주 계약 저장';
+ document.getElementById('moveInCancelEdit').hidden=true;
+ document.getElementById('moveInPaymentEntries').innerHTML='';
+ addMoveInPayment({phase:'전액',method:'undecided'});
+}
+function editMoveInContract(id){
+ const c=db.moveIn.find(x=>String(x.id)===String(id));if(!c)return;
+ const form=document.getElementById('moveInForm');form.reset();
+ for(const field of ['id','name','category','vendor','contractDate','workDate','status','memo']){
+  const el=form.elements.namedItem(field);if(el)el.value=String(c[field]??'');
+ }
+ document.getElementById('moveInPaymentEntries').innerHTML='';
+ const payments=moveInPayments(c);(payments.length?payments:[{phase:'전액'}]).forEach(p=>addMoveInPayment(p));
+ document.getElementById('moveInFormTitle').textContent='입주 계약 항목 수정';
+ document.getElementById('moveInSaveButton').textContent='수정 내용 저장';
+ document.getElementById('moveInCancelEdit').hidden=false;
+ document.getElementById('moveInFormTitle').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function moveInPaymentStages(c){
+ return moveInPayments(c).map(p=>{
+  const method=moveInPayName[p.method]||'결제수단 미정';
+  const scheduleInfo=p.method==='installment'&&moveInScheduled(p)?
+   `<details class="movein-details"><summary>${safe(p.months)}개월 카드 청구 일정 보기</summary><div class="table-scroll">${table(['청구월','예상 청구액'],Array.from({length:Math.max(1,Math.min(120,number(p.months)))},(_,i)=>{
+    const month=monthAt(p.billingStart,i);
+    const value=cardAmount({start:p.billingStart,amount:p.amount,months:p.months},month);
+    return `<tr><td>${month}</td><td class="num">${won(value)}</td></tr>`;
+   }))}</div></details>`:'';
+  const due=p.dueDate?safe(p.dueDate):'일정 미정';
+  const billing=['card','installment'].includes(p.method)?` · 첫 청구월 ${p.billingStart?safe(p.billingStart):'미정'}${p.method==='installment'?` · ${safe(p.months)}개월`:''}`:'';
+  const unscheduled=!moveInScheduled(p)?'<span class="movein-status warn">현금흐름 미반영</span>':'';
+  const paid=Boolean(p.paid);
+  return `<div class="movein-stage"><div class="movein-stage-line"><b>${safe(p.phase||'지급')}</b><strong>${won(p.amount)}</strong></div>
+   <p>${safe(method)}${p.cardName?' · '+safe(p.cardName):''} · 결제 예정일 ${due}${billing}</p>
+   <div class="movein-stage-line"><span>${paid?'<span class="movein-status done">처리 완료</span>':'<span class="movein-status">처리 예정</span>'} ${unscheduled}</span>
+   <button type="button" class="subtle" data-movein-paid="${safe(c.id)}" data-payment-id="${safe(p.id)}">${paid?'처리 완료 취소':'지급·결제 처리 완료'}</button></div>${scheduleInfo}</div>`;
+ }).join('');
+}
+function openMoveInDetails(){return new Set([...document.querySelectorAll('details[data-movein-details][open]')].map(d=>d.dataset.moveinDetails))}
+function renderMoveIn(){
+ const active=db.moveIn.filter(c=>c.status!=='canceled');
+ const payments=active.flatMap(c=>moveInPayments(c));
+ const contractTotal=sum(active.map(moveInTotal));
+ const cash=sum(payments.filter(p=>p.method==='cash').map(p=>number(p.amount)));
+ const card=sum(payments.filter(p=>['card','installment'].includes(p.method)).map(p=>number(p.amount)));
+ const unplanned=sum(payments.filter(p=>!moveInScheduled(p)).map(p=>number(p.amount)));
+ const late=payments.filter(p=>!p.paid&&validIsoDate(p.dueDate)&&p.dueDate<isoLocal(today)).length;
+ const current=moveInMonthly(currentMonth);
+ document.getElementById('moveInKpi').innerHTML=[
+  ['유효 계약금액 합계',won(contractTotal)],['현금 예정 총액',won(cash)],['카드 예정 총액',won(card)],
+  ['이번 달 입주비용',won(current.total)],['현금흐름 미반영',won(unplanned)],['기한 경과 미처리',`${late}건`]
+ ].map(([name,value])=>`<div class="kpi"><span>${name}</span><strong>${value}</strong></div>`).join('');
+ const events=[];
+ for(const c of active){
+  if(c.status==='planned'&&validIsoDate(c.contractDate))events.push({date:c.contractDate,name:c.name,label:'계약 예정',text:c.vendor||''});
+  if(c.status!=='complete'&&validIsoDate(c.workDate))events.push({date:c.workDate,name:c.name,label:'시공·배송 일정',text:c.vendor||''});
+  for(const p of moveInPayments(c)){
+   if(!p.paid&&validIsoDate(p.dueDate))events.push({date:p.dueDate,name:c.name,label:`${p.phase||'지급'} · ${moveInPayName[p.method]||'결제수단 미정'}`,text:won(p.amount)});
+  }
+ }
+ events.sort((a,b)=>a.date.localeCompare(b.date)||a.name.localeCompare(b.name,'ko'));
+ const upcoming=events.slice(0,12);
+ document.getElementById('moveInTimeline').innerHTML=upcoming.length?`<div class="movein-timeline">${upcoming.map(x=>{
+  const past=x.date<isoLocal(today);
+  return `<div class="movein-event"><span class="date">${safe(x.date)}</span><div class="description"><strong>${safe(x.name)}</strong>${safe(x.label)}${x.text?' · '+safe(x.text):''}</div>${past?'<span class="movein-status warn">기한 경과</span>':'<span class="movein-status">예정</span>'}</div>`;
+ }).join('')}</div>${events.length>12?`<p class="muted">가장 빠른 일정 12건을 표시합니다. 전체 계약 내역에서 나머지 일정을 확인하세요.</p>`:''}`:'<div class="empty">등록된 예정 일정이 없습니다. 계약일·지급일·시공일을 입력하면 여기에 표시됩니다.</div>';
+ const open=openMoveInDetails();
+ const filter=document.getElementById('moveInFilter').value;
+ const list=db.moveIn.filter(c=>filter==='all'||c.status===filter).sort((a,b)=>(a.contractDate||'9999').localeCompare(b.contractDate||'9999')||String(a.name).localeCompare(String(b.name),'ko'));
+ document.getElementById('moveInList').innerHTML=list.length?list.map(c=>{
+  const total=moveInTotal(c),pcs=moveInPayments(c),done=pcs.filter(p=>p.paid).length;
+  const cls=c.status==='complete'?'done':c.status==='canceled'?'cancel':c.status==='planned'?'warn':'';
+  return `<div class="card"><div class="movein-contract-head"><div><h3>${safe(c.name)} <span class="movein-status ${cls}">${safe(moveInStatusName[c.status]||'계약 예정')}</span></h3><p class="muted">${safe(c.category||'기타')}${c.vendor?' · '+safe(c.vendor):''}</p></div><strong>${won(total)}</strong></div>
+  <div class="movein-contract-meta"><span>계약일 ${safe(c.contractDate||'미정')}</span><span>시공/배송 ${safe(c.workDate||'미정')}</span><span>지급 단계 ${pcs.length}건</span><span>처리 완료 ${done}건</span></div>
+  ${c.memo?`<p class="muted" style="white-space:pre-wrap">${safe(c.memo)}</p>`:''}
+  <div class="movein-contract-actions"><button type="button" class="subtle" data-movein-edit="${safe(c.id)}">수정</button><button type="button" class="subtle danger" data-movein-delete="${safe(c.id)}">삭제</button></div>
+  <details data-movein-details="${safe(c.id)}" class="movein-details" ${open.has(String(c.id))?'open':''}><summary>지급 단계 · 카드 청구 일정 (${pcs.length}건)</summary>${moveInPaymentStages(c)}</details></div>`;
+ }).join(''):'<div class="card empty">해당 진행 상태의 계약이 없습니다.</div>';
+ renderMoveInMonthly();
+}
+function renderMoveInMonthly(){
+ const year=Number(document.getElementById('moveInYear').value)||today.getFullYear();
+ const months=Array.from({length:12},(_,i)=>({month:ym(year,i+1),...moveInMonthly(ym(year,i+1))}));
+ const cols=['cash','card','installment','total'];
+ const rows=months.map(m=>`<tr><td>${safe(m.month)}</td>${cols.map(k=>`<td class="num">${won(m[k])}</td>`).join('')}</tr>`);
+ const totals=Object.fromEntries(cols.map(k=>[k,sum(months.map(m=>m[k]))]));
+ rows.push(`<tr style="font-weight:750;background:#eef5ff"><td>연간 합계</td>${cols.map(k=>`<td class="num">${won(totals[k])}</td>`).join('')}</tr>`);
+ document.getElementById('moveInMonthly').innerHTML=table(['월','현금·계좌이체','카드 일시불','카드 할부','총 유출'],rows);
+}
+function rebuildMoveInYears(oldYear){
+ const el=document.getElementById('moveInYear');
+ const chosen=Number(el.value)||oldYear||today.getFullYear();
+ const values=db.moveIn.flatMap(c=>[c.contractDate,c.workDate,...moveInPayments(c).map(p=>p.dueDate),...moveInPayments(c).map(p=>p.billingStart)]).filter(Boolean).map(s=>Number(s.slice(0,4))).filter(Number.isFinite);
+ const min=Math.max(1900,Math.min(today.getFullYear()-5,...values,2020));
+ const max=Math.min(2100,Math.max(today.getFullYear()+8,...values,2032));
+ el.innerHTML=Array.from({length:max-min+1},(_,i)=>max-i).map(y=>`<option value="${y}">${y}년</option>`).join('');
+ el.value=String(chosen);
+ if(!el.value)el.value=String(today.getFullYear());
+}
+
+/* Source-linked entries are calculated, NOT appended to db.fixed/db.variable.
+   This single ledger powers the budget page and cashflow, preventing double-counting. */
+const AUTO_SOURCE={loans:'대출',cards:'카드 할부',savings:'예·적금',moveIn:'입주 준비'};
+function automaticEntries(month){
+ if(!validMonth(month))return [];
+ const entries=[];
+ const add=(source,direction,name,when,amount,detail='')=>{
+  if(!Number.isFinite(Number(amount))||Number(amount)<=0)return;
+  entries.push({source,direction,name:String(name||'이름 없음'),when:String(when||month),amount:Number(amount),detail:String(detail||'')});
+ };
+ for(const l of db.loans){
+  for(const p of schedule(l)){
+   if(p.date.slice(0,7)!==month)continue;
+   add('loans','out',l.name,p.date,p.payment,`원금 ${won(p.principal)} · 이자 ${won(p.interest)} · 연 ${p.rate}%`);
+  }
+ }
+ for(const c of db.cards){
+  if(!validMonth(c.start)||number(c.months)<1)continue;
+  const payment=cardAmount(c,month);
+  const nth=monthIndex(month)-monthIndex(c.start)+1;
+  if(payment>0)add('cards','out',c.name,month+' (청구월)',payment,`${c.card||'카드명 미입력'} · ${nth}/${c.months}회 할부`);
+ }
+ for(const s of db.savings){
+  for(const depositDate of savingsDates(s)){
+   if(depositDate.slice(0,7)===month)
+    add('savings','out',s.name,depositDate,number(s.amount),s.kind==='installment'?'적금 월 납입':'예금·금융상품 예치');
+  }
+  // Assume all scheduled contributions are made and show a projected, pre-tax maturity inflow.
+  if(validIsoDate(s.end)&&s.end.slice(0,7)===month){
+   const estimate=savingsEstimate(s);
+   if(estimate)add('savings','in',s.name,s.end,estimate.maturity,`만기 예상 수령 (납입원금 ${won(estimate.principal)} + 세전 이자 ${won(estimate.interest)})`);
+  }
+ }
+ for(const c of db.moveIn){
+  if(c.status==='canceled')continue;
+  for(const p of moveInPayments(c)){
+   const amount=number(p.amount),label=`${c.name||'입주 준비'} · ${p.phase||'지급'}`;
+   if(p.method==='cash'&&p.dueDate?.slice(0,7)===month){
+    add('moveIn','out',label,p.dueDate,amount,'현금·계좌이체');
+   }else if(p.method==='card'&&p.billingStart===month){
+    add('moveIn','out',label,month+' (청구월)',amount,`${p.cardName||'카드'} · 일시불`);
+   }else if(p.method==='installment'&&validMonth(p.billingStart)&&number(p.months)>=1){
+    const payment=cardAmount({amount,start:p.billingStart,months:p.months},month);
+    if(payment>0){
+     const nth=monthIndex(month)-monthIndex(p.billingStart)+1;
+     add('moveIn','out',label,month+' (청구월)',payment,`${p.cardName||'카드'} · ${nth}/${p.months}회 할부`);
+    }
+   }
+  }
+ }
+ return entries.sort((a,b)=>a.when.slice(0,7).localeCompare(b.when.slice(0,7))||a.when.localeCompare(b.when)||a.source.localeCompare(b.source));
+}
+// 기타 수입은 급여·금융상품 만기액과 구분하여 원본 데이터로 저장합니다.
+// 반복 수입은 첫 수입월부터 지정 종료월까지, 종료월이 없으면 계속 발생한 것으로 가정합니다.
+function otherIncomeForMonth(month){
+ if(!validMonth(month))return [];
+ return db.otherIncome.map(item=>{
+  if(!validIsoDate(item.date))return null;
+  const amount=Number(item.amount);
+  if(!Number.isSafeInteger(amount)||amount<=0)return null;
+  const startMonth=item.date.slice(0,7);
+  if(item.repeat==='monthly'){
+   if(month<startMonth||(validMonth(item.endMonth)&&month>item.endMonth))return null;
+   const date=addMonthsDate(item.date,monthIndex(month)-monthIndex(startMonth));
+   return {...item,when:date,amount};
+  }
+  if(month!==startMonth)return null;
+  return {...item,when:item.date,amount};
+ }).filter(Boolean).sort((a,b)=>a.when.localeCompare(b.when)||String(a.name).localeCompare(String(b.name)));
+}
+function syncOtherIncomeRepeat(){
+ const monthly=document.getElementById('otherIncomeRepeat').value==='monthly';
+ document.getElementById('otherIncomeEndWrap').hidden=!monthly;
+ document.getElementById('otherIncomeEndMonth').disabled=!monthly;
+}
+function resetOtherIncomeForm(){
+ const f=document.getElementById('otherIncomeForm');f.reset();f.elements.id.value='';
+ const viewMonth=document.getElementById('budgetMonth').value;
+ f.elements.date.value=validMonth(viewMonth)&&viewMonth!==currentMonth?`${viewMonth}-01`:isoLocal(today);
+ document.getElementById('otherIncomeSubmit').textContent='월급 외 수입 추가';
+ document.getElementById('otherIncomeCancelEdit').hidden=true;
+ syncOtherIncomeRepeat();
+}
+function renderOtherIncome(month){
+ const rows=otherIncomeForMonth(month),total=sum(rows.map(x=>x.amount));
+ document.getElementById('otherIncomeSummary').innerHTML=`<span><strong>${safe(month)}</strong> 월급 외 수입 <b>${rows.length}건</b></span><strong>+ ${won(total)}</strong>`;
+ document.getElementById('otherIncomeList').innerHTML=rows.length?table(['수입명','구분','반복 여부','조회 월 수입일','첫 수입일','종료월','금액','관리'],[...rows].sort((a,b)=>b.when.localeCompare(a.when)).map(item=>{
+  const recurring=item.repeat==='monthly';
+  const controls=`<div class="other-income-actions"><button type="button" class="subtle" data-other-income-edit="${safe(item.id)}">수정</button>${removeBtn('otherIncome',item.id)}</div>`;
+  return `<tr><td>${safe(item.name)}</td><td>${safe(item.category||'기타')}</td><td>${recurring?'매월 반복':'일회성'}</td><td>${safe(item.when)}</td><td>${safe(item.date)}</td><td>${recurring?safe(item.endMonth||'계속'):'—'}</td><td class="num">${won(item.amount)}</td><td>${controls}</td></tr>`;
+ })):`<div class="empty">${safe(month)}에 해당하는 월급 외 수입이 없습니다.</div>`;
+ enhanceMobileTables();
+}
+// 고정비는 설정한 월에만 표시하거나, 지정한 시작월~종료월 동안 매월 반영합니다.
+// 구버전의 적용월 없는 고정비는 이전과 동일하게 전체 월 반복으로 계산합니다.
+function fixedForMonth(month){
+ if(!validMonth(month))return [];
+ return db.fixed.filter(item=>{
+  const start=String(item.startMonth||'');
+  if(!validMonth(start))return true; // 기존 기록의 계산값 보존
+  if(item.repeat==='once')return month===start;
+  return month>=start&&(!validMonth(item.endMonth)||month<=item.endMonth);
+ });
+}
+function syncFixedRepeat(){
+ const recurring=document.getElementById('fixedRepeat').value==='monthly';
+ document.getElementById('fixedEndWrap').hidden=!recurring;
+ document.getElementById('fixedEndMonth').disabled=!recurring;
+}
+function resetFixedForm(){
+ const f=document.getElementById('fixedForm');f.reset();f.elements.id.value='';
+ f.elements.startMonth.value=validMonth(document.getElementById('budgetMonth').value)?document.getElementById('budgetMonth').value:currentMonth;
+ f.elements.repeat.value='monthly';f.elements.endMonth.value='';
+ document.getElementById('fixedSubmit').textContent='고정비용 추가';
+ document.getElementById('fixedCancelEdit').hidden=true;
+ syncFixedRepeat();
+}
+function renderMonthExpenses(month){
+ const fixed=fixedForMonth(month),variable=db.variable.filter(item=>String(item.date||'').slice(0,7)===month);
+ document.getElementById('fixedSummary').innerHTML=`<span><b>${safe(month)}</b> 적용 고정비 <b>${fixed.length}건</b></span><strong>− ${won(sum(fixed.map(x=>number(x.amount))))}</strong>`;
+ document.getElementById('fixedList').innerHTML=fixed.length?table(['비용명','구분','적용 기간','금액','관리'],fixed.map(x=>{
+  const period=validMonth(x.startMonth)?x.repeat==='once'?`${x.startMonth}만`:`${x.startMonth} ~ ${validMonth(x.endMonth)?x.endMonth:'계속'}`:'기존 기록 · 매월 반복';
+  return `<tr><td>${safe(x.name)}</td><td>${safe(x.category)}</td><td>${safe(period)}</td><td class="num">${won(x.amount)}</td><td><div class="other-income-actions"><button class="subtle" type="button" data-fixed-edit="${safe(x.id)}">수정</button>${removeBtn('fixed',x.id)}</div></td></tr>`;
+ })):`<div class="empty">${safe(month)}에 적용되는 고정비가 없습니다.</div>`;
+ document.getElementById('variableSummary').innerHTML=`<span><b>${safe(month)}</b> 변동지출 <b>${variable.length}건</b></span><strong>− ${won(sum(variable.map(x=>number(x.amount))))}</strong>`;
+ document.getElementById('variableList').innerHTML=variable.length?table(['지출일','비용명','구분','금액','관리'],[...variable].sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${safe(x.date)}</td><td>${safe(x.name)}</td><td>${safe(x.category)}</td><td class="num">${won(x.amount)}</td><td>${removeBtn('variable',x.id)}</td></tr>`)):`<div class="empty">${safe(month)}에 해당하는 변동지출이 없습니다.</div>`;
+ enhanceMobileTables();
+}
+function syncBudgetDraftMonths(){
+ const month=validMonth(document.getElementById('budgetMonth').value)?document.getElementById('budgetMonth').value:currentMonth;
+ const income=document.getElementById('otherIncomeForm');
+ if(!income.elements.id.value)income.elements.date.value=month===currentMonth?isoLocal(today):`${month}-01`;
+ const fixed=document.getElementById('fixedForm');
+ if(!fixed.elements.id.value)fixed.elements.startMonth.value=month;
+ document.querySelector('#variableForm [name=date]').value=month===currentMonth?isoLocal(today):`${month}-01`;
+}
+function metrics(month){
+ const items=automaticEntries(month);
+ const salary=storedNet(month,'mine')+storedNet(month,'spouse');
+ const otherIncome=sum(otherIncomeForMonth(month).map(x=>x.amount));
+ const maturity=sum(items.filter(e=>e.source==='savings'&&e.direction==='in').map(e=>e.amount));
+ const income=salary+otherIncome+maturity;
+ const fixed=sum(fixedForMonth(month).map(x=>number(x.amount)));
+ const variable=sum(db.variable.filter(x=>String(x.date||'').slice(0,7)===month).map(x=>number(x.amount)));
+ const category=key=>sum(items.filter(e=>e.source===key&&e.direction==='out').map(e=>e.amount));
+ const loans=category('loans'),cards=category('cards'),savings=category('savings'),moveIn=category('moveIn');
+ const out=fixed+variable+loans+cards+savings+moveIn;
+ return {month,salary,otherIncome,maturity,income,fixed,variable,loans,cards,savings,moveIn,out,balance:income-out};
+}
+function renderBudget(){
+ const selected=document.getElementById('budgetMonth').value;
+ const month=validMonth(selected)?selected:currentMonth;
+ const m=metrics(month),items=automaticEntries(month),autoOut=m.loans+m.cards+m.savings+m.moveIn;
+ showSalaryMonth(month);
+ renderSalaryHistory(month);
+ renderOtherIncome(month);
+ renderMonthExpenses(month);
+ document.getElementById('budgetKpi').innerHTML=[
+  ['월 실수령 급여',m.salary],['월급 외 수입',m.otherIncome],['예상 만기 유입',m.maturity],['월 총 현금유입',m.income],['수동 고정비',m.fixed],
+  ['수동 변동비',m.variable],['자동 현금유출',autoOut],['전체 현금유출',m.out],['예상 남는 현금',m.balance]
+ ].map(([label,value])=>`<div class="kpi ${label==='예상 남는 현금'&&value<0?'budget-kpi-balance-negative':''}"><span>${label}</span><strong>${won(value)}</strong></div>`).join('');
+ document.getElementById('autoBreakdown').innerHTML=[
+  ['대출',m.loans,false],['카드 할부',m.cards,false],['예·적금 납입/예치',m.savings,false],
+  ['입주 준비',m.moveIn,false],['예·적금 만기 유입',m.maturity,true]
+ ].map(([label,value,incoming])=>`<div class="auto-breakdown-item ${incoming?'incoming':''}"><span>${label}</span><strong>${incoming?'+':''}${won(value)}</strong></div>`).join('');
+ document.getElementById('autoExpenseList').innerHTML=items.length?table(
+  ['구분','항목명','납부일·청구월','계산 금액','계산 근거'],
+  items.map(e=>`<tr><td><span class="auto-kind ${e.direction==='in'?'incoming':''}">${safe(AUTO_SOURCE[e.source]||'기타')} · ${e.direction==='in'?'유입':'유출'}</span></td><td>${safe(e.name)}</td><td>${safe(e.when)}</td><td class="num auto-amount ${e.direction==='in'?'incoming':'outgoing'}">${e.direction==='in'?'+':'−'} ${won(e.amount)}</td><td class="auto-source-detail">${safe(e.detail)}</td></tr>`)
+ ):'<div class="empty">이 달에는 대출·카드 할부·금융상품·입주 준비의 자동 반영 일정이 없습니다.</div>';
+}
+
+function table(head,rows){return rows.length?`<table><thead><tr>${head.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`:'<div class="empty">등록된 내역이 없습니다.</div>'}
+const removeBtn=(type,id)=>`<button type="button" class="subtle danger" data-remove="${type}" data-id="${safe(id)}" aria-label="삭제">삭제</button>`;
+// 금리 변경 상세 창이 열려 있으면 렌더링 후에도 열어 둡니다.
+function openRatePanels(){return new Set([...document.querySelectorAll('details[data-rate-panel][open]')].map(el=>el.dataset.ratePanel))}
+function rateManager(item,collection,existingOpen){
+ const key=`${collection}:${item.id}`,end=maturityDate(item),changes=rateChanges(item);
+ const min=new Date(utcDay(item.start)+86400000).toISOString().slice(0,10);
+ const max=collection==='loans'?end:new Date(utcDay(end)-86400000).toISOString().slice(0,10);
+ const extra=collection==='loans'?'금리 변경일 이후 최초 상환회차에 새 금리와 일할 계산된 이자를 반영합니다.':'변경 시점까지의 납입원금·추정 이자를 표시하고 만기 예상 금액을 갱신합니다. 월 적금 납입액은 바뀌지 않습니다.';
+ const dates=changes.map(c=>{
+  if(collection==='loans'){
+   const payments=schedule(item),earlier=payments.filter(p=>p.date<c.date),next=payments.find(p=>p.date>=c.date);
+   const remaining=number(item.principal)-sum(earlier.map(p=>p.principal));
+   return `<tr><td>${c.date}</td><td>연 ${c.rate}%</td><td class="num">${won(remaining)}</td><td class="num">${next?won(next.interest):'-'}</td><td class="num">${next?won(next.payment):'-'}</td><td>${next?.date||'-'}</td><td><button type="button" class="subtle danger" data-rate-delete="loans" data-id="${safe(item.id)}" data-event="${safe(c.id)}" aria-label="금리 변경 삭제">삭제</button></td></tr>`;
+  }
+  const e=savingsEstimate(item,c.date),all=savingsEstimate(item);
+  return `<tr><td>${c.date}</td><td>연 ${c.rate}%</td><td class="num">${e?won(e.principal):'-'}</td><td class="num">${e?won(e.interest):'-'}</td><td class="num">${all?won(all.interest):'-'}</td><td class="num">${all?won(all.maturity):'-'}</td><td><button type="button" class="subtle danger" data-rate-delete="savings" data-id="${safe(item.id)}" data-event="${safe(c.id)}" aria-label="금리 변경 삭제">삭제</button></td></tr>`;
+ });
+ const headings=collection==='loans'?['변경 적용일','새 연 금리','변경 직전 원금잔액','첫 회 이자','첫 회 월 납입금','첫 회 납입일','']:['변경 적용일','새 연 금리','변경일 납입원금','변경일까지 이자','예상 총 이자','예상 만기 수령액',''];
+ return `<details class="rate-history" data-rate-panel="${safe(key)}" ${existingOpen.has(key)?'open':''}>
+ <summary>금리 변경 등록·이력 (${changes.length}건)</summary>
+ <p class="rate-explain">${extra} 동일한 적용일로 다시 등록하면 해당 날짜의 금리가 수정됩니다. 금리 변경 내역은 자동 수집하지 않습니다.</p>
+ <form data-rate-form="${collection}" data-id="${safe(item.id)}">
+  <div class="fields"><div class="field"><label>금리 변경 적용일</label><input type="date" name="date" min="${safe(min)}" max="${safe(max)}" required></div>
+  <div class="field"><label>변경 후 연 금리 (%)</label><input type="number" name="rate" min="0" max="100" step="0.001" inputmode="decimal" placeholder="예: 4.25" required></div></div>
+  <div class="actions"><button type="submit" class="primary">변경 금리 저장 · 재계산</button></div>
+ </form>
+ <div class="rate-events-title">초기 금리: ${safe(item.start)}부터 연 ${safe(item.rate)}% <span class="rate-pill base">기준</span></div>
+ ${changes.length?`<div class="table-scroll" role="region" aria-label="금리 변경 이력, 좌우로 스크롤 가능" tabindex="0">${table(headings,dates)}</div>`:'<p class="muted">등록된 금리 변경 이력이 없습니다.</p>'}
+ </details>`;
+}
+function renderLoanMonthlySummary(){
+ const choice=document.getElementById('loanMonth').value;
+ const month=validMonth(choice)?choice:currentMonth;
+ const dueByLoan=db.loans.map(loan=>({payments:schedule(loan)
+  .filter(payment=>payment.date.slice(0,7)===month)})).filter(row=>row.payments.length);
+ const due=dueByLoan.flatMap(row=>row.payments);
+ const principal=sum(due.map(x=>x.principal));
+ const interest=sum(due.map(x=>x.interest));
+ const total=sum(due.map(x=>x.payment));
+ const loanCount=dueByLoan.length;
+ document.getElementById('loanMonthlySummary').innerHTML=`
+  <div class="loan-summary-grid">
+   <div class="kpi loan-total-kpi"><span>${safe(salaryMonthLabel(month))} 총 상환 예정액</span><strong>${won(total)}</strong></div>
+   <div class="kpi"><span>원금 상환 합계</span><strong>${won(principal)}</strong></div>
+   <div class="kpi"><span>이자 납부 합계</span><strong>${won(interest)}</strong></div>
+  </div>
+  <p class="loan-summary-foot">${due.length?`상환 일정 ${due.length}회 · ${loanCount}개 대출 합산 · 1번 수입·지출 및 5번 현금흐름의 대출 상환 항목과 동일한 계산 기준입니다.`:'조회 월에 예정된 대출 상환금이 없습니다.'} 실제 납부 여부는 확인하지 않은 예상 금액입니다.</p>`;
+}
+function renderLoans(){
+ const oldOpen=openRatePanels();
+ document.getElementById('loanList').innerHTML=db.loans.length?db.loans.map(l=>{
+  const sc=schedule(l),past=sc.filter(x=>x.date<=isoLocal(today)),future=sc.filter(x=>x.date>isoLocal(today));
+  const paid=sum(past.map(x=>x.principal)),intPaid=sum(past.map(x=>x.interest)),remaining=number(l.principal)-paid;
+  const rateNow=rateAt(l,isoLocal(today)),isVariable=rateChanges(l).length>0;
+  const label=l.method==='bullet'?'만기일시':l.method==='principal'?'원금균등':'원리금균등';
+  const totalInt=sum(sc.map(x=>x.interest));
+  return `<div class="card"><h2>${safe(l.name)} <span class="tag">${label}</span>${isVariable?'<span class="rate-pill">변동금리 적용</span>':''}</h2>
+  <p class="muted">대출원금 ${won(l.principal)} · 최초 연 ${safe(l.rate)}% · ${safe(l.start)} 시작 · ${safe(l.term)}개월</p>
+  <p class="rate-change-label">현재 적용 금리 연 <b>${rateNow}%</b> · 예상 총 이자 ${won(totalInt)}${isVariable?' · 금리변경 내역 반영':''}</p>
+  <div class="grid"><div class="kpi"><span>상환한 원금 (예정일 기준)</span><strong>${won(paid)}</strong></div><div class="kpi"><span>납부한 이자 (추정)</span><strong>${won(intPaid)}</strong></div><div class="kpi"><span>남은 원금</span><strong>${won(remaining)}</strong></div><div class="kpi"><span>다음 월 납입금</span><strong>${future.length?won(future[0].payment):'상환 완료'}</strong></div></div>
+  <p class="muted">${past.length}/${sc.length}회 상환 예정일 경과 · ${future.length}회 남음 · 다음 납부일 ${future[0]?.date||'-'}</p>
+  <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,100*paid/number(l.principal))}%"></div></div>
+  ${rateManager(l,'loans',oldOpen)}
+  <details style="margin-top:16px"><summary style="cursor:pointer;font-weight:700">전체 상환 일정 (${sc.length}회) 펼치기</summary>
+  <div class="table-scroll schedule-table" role="region" aria-label="대출 상환 상세표, 좌우로 스크롤 가능" tabindex="0">${table(['회차','상환일','적용 금리(회차 말)','원금','이자','월 납입금','잔액'],sc.map((x,i)=>`<tr><td>${i+1}</td><td>${x.date}</td><td>${x.rate}%${x.changed?' *':''}</td><td class="num">${won(x.principal)}</td><td class="num">${won(x.interest)}</td><td class="num">${won(x.payment)}</td><td class="num">${won(x.balance)}</td></tr>`))}</div>
+  ${rateChanges(l).length?'<p class="muted">* 해당 회차 중 금리 변경이 있으면 회차별 이자에 변경 전·후 기간을 나누어 반영합니다.</p>':''}
+  </details><div class="actions">${removeBtn('loans',l.id)}</div></div>`;
+ }).join(''):'<div class="card empty">등록된 대출이 없습니다.</div>';
+}
+function renderSavings(){
+ const oldOpen=openRatePanels();
+ document.getElementById('savingsList').innerHTML=db.savings.length?db.savings.map(s=>{
+  const e=savingsEstimate(s),current=isoLocal(today)<s.start?{principal:0,interest:0}:savingsEstimate(s,isoLocal(today));
+  const type=s.interestType==='monthly'?'월복리':s.interestType==='annual'?'연복리':'단리';
+  const label=s.kind==='deposit'?'예금':s.kind==='installment'?'적금':'기타';
+  const isVariable=rateChanges(s).length>0;
+  return `<div class="card"><h2>${safe(s.name)} <span class="tag">${label}</span>${isVariable?'<span class="rate-pill">변동금리 적용</span>':''}</h2>
+  <p class="muted">${s.start} ~ ${s.end} · ${type} · 최초 연 ${safe(s.rate)}% · 현재 연 ${rateAt(s,isoLocal(today))}%</p>
+  <p class="rate-change-label">${label==='적금'?'월 납입금':'예치 원금'} <b>${won(s.amount)}</b>${label==='적금'?' (금리 변경 후에도 동일)':''} · ${e?.count||0}회 납입 가정</p>
+  <div class="rate-kpis"><div class="kpi"><span>만기까지 납입원금</span><strong>${e?won(e.principal):'-'}</strong></div><div class="kpi"><span>예상 세전 이자</span><strong>${e?won(e.interest):'-'}</strong></div><div class="kpi"><span>예상 세전 만기 수령액</span><strong>${e?won(e.maturity):'-'}</strong></div></div>
+  <p class="muted">현재 날짜까지 납입원금 ${current?won(current.principal):'0원'} · 발생 이자 ${current?won(current.interest):'0원'} (추정)</p>
+  ${rateManager(s,'savings',oldOpen)}
+  <div class="actions">${removeBtn('savings',s.id)}</div></div>`;
+ }).join(''):'<div class="card empty">등록된 금융상품이 없습니다.</div>';
+}
+function render(){renderBudget();renderSalaryPreview();
+renderLoanMonthlySummary();renderLoans();
+document.getElementById('cardList').innerHTML=table(['구매내역','카드','첫 청구월','총 금액','개월','이번 달','잔여 청구액',''],db.cards.map(c=>{const remaining=sum(Array.from({length:number(c.months)},(_,i)=>cardAmount(c,monthAt(c.start,i))).filter((v,i)=>monthAt(c.start,i)>=currentMonth));return `<tr><td>${safe(c.name)}</td><td>${safe(c.card)}</td><td>${safe(c.start)}</td><td class="num">${won(c.amount)}</td><td>${safe(c.months)}</td><td class="num">${won(cardAmount(c,currentMonth))}</td><td class="num">${won(remaining)}</td><td>${removeBtn('cards',c.id)}</td></tr>`}));
+renderSavings();renderSavingsPreview();renderMoveIn();renderFlow()}
+function enhanceMobileTables(){
+ document.querySelectorAll('.mobile-cards table').forEach(table=>{
+  const headings=[...table.querySelectorAll('thead th')].map(th=>th.textContent.trim());
+  table.querySelectorAll('tbody tr').forEach(row=>{
+   [...row.cells].forEach((cell,index)=>{cell.dataset.label=headings[index]||''});
+  });
+ });
+}
+function renderFlow(){
+ const y=Number(document.getElementById('flowYear').value)||today.getFullYear(),months=Array.from({length:12},(_,i)=>metrics(ym(y,i+1))),total=k=>sum(months.map(m=>m[k]));
+ document.getElementById('flowKpi').innerHTML=[['연간 급여 수입',total('salary')],['연간 월급 외 수입',total('otherIncome')],['예상 만기 수령',total('maturity')],['연간 총 현금유입',total('income')],['연간 총 현금유출',total('out')],['연간 순현금흐름',total('balance')]].map(([name,v])=>`<div class="kpi"><span>${name}</span><strong>${won(v)}</strong></div>`).join('');
+ const max=Math.max(1,...months.flatMap(m=>[m.income,m.out]));
+ document.getElementById('flowChart').innerHTML=months.map(m=>`<div class="month" title="${m.month} / 유입 ${won(m.income)} / 유출 ${won(m.out)}"><div class="column-pair"><div class="column income" style="height:${Math.max(1,m.income/max*100)}%"></div><div class="column expense" style="height:${Math.max(1,m.out/max*100)}%"></div></div><small>${m.month.slice(5)}월</small></div>`).join('');
+ document.getElementById('flowTable').innerHTML=table(['월','실수령 급여','월급 외 수입','만기 예상 유입','총 유입','고정비','변동비','대출 상환','카드 할부','예·적금 납입/예치','입주 비용','총 유출','순현금흐름'],months.map(m=>`<tr><td>${m.month}</td>${['salary','otherIncome','maturity','income','fixed','variable','loans','cards','savings','moveIn','out','balance'].map(k=>`<td class="num">${won(m[k])}</td>`).join('')}</tr>`));
+ enhanceMobileTables();
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab,.panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.removeAttribute('aria-current'));b.classList.add('active');b.setAttribute('aria-current','page');document.getElementById(b.dataset.tab).classList.add('active');if(window.matchMedia('(max-width:680px)').matches)window.scrollTo(0,0)}));
+document.getElementById('budgetMonth').addEventListener('change',()=>{syncBudgetDraftMonths();renderBudget()});
+document.getElementById('budgetMonth').addEventListener('input',()=>{syncBudgetDraftMonths();renderBudget()});
+document.getElementById('budgetCurrentMonth').addEventListener('click',()=>{document.getElementById('budgetMonth').value=currentMonth;syncBudgetDraftMonths();renderBudget()});
+document.getElementById('loanMonth').addEventListener('change',renderLoanMonthlySummary);
+document.getElementById('loanMonth').addEventListener('input',renderLoanMonthlySummary);
+document.getElementById('loanCurrentMonth').addEventListener('click',()=>{document.getElementById('loanMonth').value=currentMonth;renderLoanMonthlySummary()});
+// 월급 외 수입 입력, 수정, 삭제: 같은 기록 ID를 유지하여 중복 생성하지 않습니다.
+document.getElementById('otherIncomeRepeat').addEventListener('change',syncOtherIncomeRepeat);
+document.getElementById('otherIncomeCancelEdit').addEventListener('click',()=>{resetOtherIncomeForm();document.getElementById('otherIncomeStatus').textContent='수정을 취소했습니다.'});
+document.getElementById('otherIncomeForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const f=e.currentTarget,formData=Object.fromEntries(new FormData(f));
+ const name=String(formData.name||'').trim(),date=formData.date,repeat=formData.repeat==='monthly'?'monthly':'once';
+ const amount=Number(formData.amount),endMonth=repeat==='monthly'?String(formData.endMonth||''):'';
+ if(!name||!validIsoDate(date)||!Number.isSafeInteger(amount)||amount<=0){alert('수입명·수입일·금액을 올바르게 입력하세요.');return}
+ if(endMonth&&(!validMonth(endMonth)||endMonth<date.slice(0,7))){alert('반복 종료월은 첫 수입월 이후로 입력하세요.');return}
+ const id=formData.id;
+ const updated={name,category:String(formData.category||'기타'),date,amount,repeat,endMonth};
+ let message='월급 외 수입을 등록하고 현금흐름에 반영했습니다.';
+ if(id){
+  const current=db.otherIncome.find(x=>String(x.id)===String(id));
+  if(!current){alert('수정할 내역을 찾을 수 없습니다.');resetOtherIncomeForm();return}
+  Object.assign(current,updated);message='월급 외 수입을 수정했습니다.';
+ }else db.otherIncome.push({...updated,id:uid()});
+ resetOtherIncomeForm();save();
+ document.getElementById('otherIncomeStatus').textContent=message;
+});
+document.getElementById('otherIncomeList').addEventListener('click',e=>{
+ const button=e.target.closest('button[data-other-income-edit]');if(!button)return;
+ const item=db.otherIncome.find(x=>String(x.id)===button.dataset.otherIncomeEdit);if(!item)return;
+ const f=document.getElementById('otherIncomeForm');
+ for(const k of ['id','name','category','date','amount'])f.elements[k].value=String(item[k]??'');
+ f.elements.repeat.value=item.repeat==='monthly'?'monthly':'once';
+ f.elements.endMonth.value=item.endMonth||'';
+ syncOtherIncomeRepeat();
+ document.getElementById('otherIncomeSubmit').textContent='수입 수정 저장';
+ document.getElementById('otherIncomeCancelEdit').hidden=false;
+ document.getElementById('otherIncomeStatus').textContent=`${item.name} 수입을 수정 중입니다.`;
+ f.scrollIntoView({behavior:'smooth',block:'center'});f.elements.name.focus({preventScroll:true});
+});
+document.getElementById('savingsForm').addEventListener('input',renderSavingsPreview);document.getElementById('savingsForm').addEventListener('change',renderSavingsPreview);
+/* 아파트 입주 준비 입력·수정·완료 처리 */
+document.getElementById('moveInAddPayment').addEventListener('click',()=>addMoveInPayment({phase:'잔금',method:'undecided'}));
+document.getElementById('moveInCancelEdit').addEventListener('click',resetMoveInForm);
+document.getElementById('moveInFilter').addEventListener('change',renderMoveIn);
+document.getElementById('moveInYear').addEventListener('change',renderMoveInMonthly);
+document.getElementById('moveInPaymentEntries').addEventListener('click',e=>{
+ const btn=e.target.closest('[data-pay-remove]');if(!btn)return;
+ const list=document.getElementById('moveInPaymentEntries');
+ if(list.querySelectorAll('[data-payment-entry]').length===1){alert('지급 단계를 적어도 한 개는 남겨 두세요.');return}
+ btn.closest('[data-payment-entry]').remove();updateMoveInDraft();
+});
+document.getElementById('moveInPaymentEntries').addEventListener('change',e=>{
+ const row=e.target.closest('[data-payment-entry]');if(row)syncMoveInPaymentRow(row);
+ updateMoveInDraft();
+});
+document.getElementById('moveInPaymentEntries').addEventListener('input',e=>{
+ const row=e.target.closest('[data-payment-entry]');
+ if(row&&e.target.name==='dueDate')syncMoveInPaymentRow(row);
+ updateMoveInDraft();
+});
+document.getElementById('moveInForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const form=e.currentTarget,header=new FormData(form),id=String(header.get('id')||'');
+ const name=String(header.get('name')||'').trim();
+ if(!name){alert('계약/준비 항목명을 입력하세요.');return}
+ const contractDate=String(header.get('contractDate')||''),workDate=String(header.get('workDate')||'');
+ if(contractDate&&!validIsoDate(contractDate)){alert('계약일을 확인하세요.');return}
+ if(workDate&&!validIsoDate(workDate)){alert('시공·배송일을 확인하세요.');return}
+ const payments=[];
+ for(const row of document.querySelectorAll('#moveInPaymentEntries [data-payment-entry]')){
+  const phase=String(row.querySelector('[name=phase]').value||'').trim();
+  const amount=Number(row.querySelector('[name=amount]').value);
+  const dueDate=row.querySelector('[name=dueDate]').value;
+  const method=row.querySelector('[name=method]').value;
+  const cardName=row.querySelector('[name=cardName]').value.trim();
+  const billingStart=row.querySelector('[name=billingStart]').value;
+  const months=Number(row.querySelector('[name=months]').value);
+  if(!phase||!Number.isSafeInteger(amount)||amount<1){alert('각 지급 단계의 구분과 금액(1원 이상 정수)을 확인하세요.');return}
+  if(dueDate&&!validIsoDate(dueDate)){alert('지급·결제 예정일을 확인하세요.');return}
+  if(['card','installment'].includes(method)&&billingStart&&!validMonth(billingStart)){alert('카드 첫 청구월을 확인하세요.');return}
+  if(method==='installment'&&(!Number.isInteger(months)||months<1||months>120)){alert('카드 할부 개월 수는 1~120개월로 입력하세요.');return}
+  payments.push({id:row.dataset.paymentId||uid(),phase,amount,dueDate,method,cardName:['card','installment'].includes(method)?cardName:'',billingStart:['card','installment'].includes(method)?billingStart:'',months:method==='installment'?months:1,paid:row.querySelector('[name=paid]').checked});
+ }
+ if(!payments.length){alert('지급 단계는 한 개 이상 필요합니다.');return}
+ const item={id:id||uid(),name,category:String(header.get('category')||'기타'),vendor:String(header.get('vendor')||'').trim(),contractDate,workDate,status:String(header.get('status')||'planned'),memo:String(header.get('memo')||'').trim(),payments};
+ const index=db.moveIn.findIndex(c=>String(c.id)===id);
+ if(index>=0)db.moveIn[index]=item;else db.moveIn.push(item);
+ rebuildMoveInYears(today.getFullYear());
+ resetMoveInForm();save();
+ document.getElementById('moveInList').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.addEventListener('click',e=>{
+ const edit=e.target.closest('[data-movein-edit]');
+ if(edit){editMoveInContract(edit.dataset.moveinEdit);return}
+ const del=e.target.closest('[data-movein-delete]');
+ if(del){if(!confirm('이 계약 항목과 지급 일정 전체를 삭제할까요?'))return;
+  const id=del.dataset.moveinDelete;db.moveIn=db.moveIn.filter(c=>String(c.id)!==id);
+  if(document.querySelector('#moveInForm [name=id]').value===id)resetMoveInForm();
+  rebuildMoveInYears(today.getFullYear());save();return;
+ }
+ const paid=e.target.closest('[data-movein-paid]');
+ if(paid){const c=db.moveIn.find(x=>String(x.id)===paid.dataset.moveinPaid);
+  const p=c&&moveInPayments(c).find(x=>String(x.id)===paid.dataset.paymentId);
+  if(!p)return;p.paid=!p.paid;save();
+ }
+});
+
+/* 전체 로컬 데이터 백업 및 복원 */
+document.getElementById('backupExport').addEventListener('click',()=>{
+ const json=JSON.stringify(db,null,2);
+ const blob=new Blob([json],{type:'application/json;charset=utf-8'});
+ const uri=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=uri;a.download=`우리집자산관리_백업_${isoLocal(today)}.json`;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(uri),1000);
+ document.getElementById('backupStatus').textContent='백업 파일을 저장했습니다. 파일에는 개인 재무 데이터가 들어 있으니 안전하게 보관하세요.';
+});
+document.getElementById('backupRestore').addEventListener('click',async()=>{
+ const input=document.getElementById('backupImport'),file=input.files?.[0];
+ if(!file){alert('복원할 JSON 백업 파일을 선택하세요.');return}
+ let restored;
+ try{
+  if(file.size>8*1024*1024)throw Error('파일 크기는 8MB 이하여야 합니다.');
+  restored=JSON.parse(await file.text());
+  if(!restored||typeof restored!=='object'||Array.isArray(restored))throw Error('올바른 백업 파일이 아닙니다.');
+  if(!['salary','salaryByMonth','otherIncome','fixed','variable','loans','cards','savings','moveIn'].some(k=>Object.prototype.hasOwnProperty.call(restored,k)))throw Error('가계부 백업 파일이 아닙니다.');
+  for(const k of ['otherIncome','fixed','variable','loans','cards','savings','moveIn'])if(restored[k]!==undefined&&!Array.isArray(restored[k]))throw Error(`${k} 데이터 형식이 올바르지 않습니다.`);
+ }catch(error){alert('복원할 수 없습니다: '+error.message);return}
+ if(!confirm('현재 브라우저에 저장된 모든 자산관리 데이터를 선택한 백업 파일로 교체할까요?'))return;
+ db=Object.assign(empty(),restored);
+ for(const k of ['otherIncome','fixed','variable','loans','cards','savings','moveIn'])if(!Array.isArray(db[k]))db[k]=[];
+ migrateMonthlySalary(db,currentMonth);
+ displayedSalaryMonth='';
+ rebuildYears(today.getFullYear());rebuildMoveInYears(today.getFullYear());resetMoveInForm();resetOtherIncomeForm();resetFixedForm();save();
+ input.value='';
+ document.getElementById('backupStatus').textContent='백업 데이터를 복원했습니다. 모든 메뉴에 반영되었습니다.';
+});
+
+document.getElementById('salaryForm').addEventListener('input',()=>{document.getElementById('salarySaveStatus').textContent='';renderSalaryPreview()});
+document.getElementById('salaryForm').addEventListener('submit',e=>{e.preventDefault();
+ const month=document.getElementById('budgetMonth').value;
+ const mine=Number(document.getElementById('mySalary').value),spouse=Number(document.getElementById('spouseSalary').value);
+ if(!validMonth(month)){alert('먼저 조회 월을 선택하세요.');return}
+ if(!Number.isSafeInteger(mine)||mine<0||!Number.isSafeInteger(spouse)||spouse<0){alert('월 실수령액은 0원 이상의 정수로 입력하세요.');return}
+ db.salaryByMonth[month]={mine,spouse};
+ save();
+ document.getElementById('salarySaveStatus').textContent=`${month} 월급을 저장했습니다. 이 달의 수입·지출 및 현금흐름에만 반영됩니다.`;
+});
+document.getElementById('salaryDeleteMonth').addEventListener('click',()=>{
+ const month=document.getElementById('budgetMonth').value;
+ if(!validMonth(month)||!salaryRecord(month)||!confirm(`${month}에 저장한 월급을 삭제할까요? 이 달 급여는 0원이 됩니다.`))return;
+ delete db.salaryByMonth[month];
+ displayedSalaryMonth='';
+ save();
+ document.getElementById('salarySaveStatus').textContent=`${month} 월급 기록을 삭제했습니다.`;
+});
+document.getElementById('salaryHistory').addEventListener('click',e=>{
+ const b=e.target.closest('[data-salary-month]');if(!b)return;
+ const month=b.dataset.salaryMonth;
+ if(!validMonth(month))return;
+ document.getElementById('budgetMonth').value=month;
+ renderBudget();
+ document.querySelector('.salary-monthly-card').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('fixedRepeat').addEventListener('change',syncFixedRepeat);
+document.getElementById('fixedCancelEdit').addEventListener('click',()=>{resetFixedForm();document.getElementById('fixedStatus').textContent='수정을 취소했습니다.'});
+document.getElementById('fixedForm').addEventListener('submit',e=>{
+ e.preventDefault();const f=e.currentTarget,o=Object.fromEntries(new FormData(f));
+ const name=String(o.name||'').trim(),amount=Number(o.amount),startMonth=String(o.startMonth||'');
+ const repeat=o.repeat==='once'?'once':'monthly',endMonth=repeat==='monthly'?String(o.endMonth||''):'';
+ if(!name||!Number.isSafeInteger(amount)||amount<=0||!validMonth(startMonth)){alert('고정비용명·금액·적용 시작월을 확인하세요.');return}
+ if(endMonth&&(!validMonth(endMonth)||endMonth<startMonth)){alert('종료월은 적용 시작월 이후로 입력하세요.');return}
+ const updated={name,category:String(o.category||'기타'),amount,startMonth,repeat,endMonth};
+ let message='고정비를 등록하고 지정한 기간의 현금흐름에 반영했습니다.';
+ if(o.id){
+  const old=db.fixed.find(item=>String(item.id)===String(o.id));
+  if(!old){alert('수정할 고정비를 찾을 수 없습니다.');resetFixedForm();return}
+  Object.assign(old,updated);message='고정비 적용 기간과 금액을 수정했습니다.';
+ }else db.fixed.push({...updated,id:uid()});
+ resetFixedForm();save();document.getElementById('fixedStatus').textContent=message;
+});
+document.getElementById('fixedList').addEventListener('click',e=>{
+ const btn=e.target.closest('button[data-fixed-edit]');if(!btn)return;
+ const item=db.fixed.find(x=>String(x.id)===btn.dataset.fixedEdit);if(!item)return;
+ const f=document.getElementById('fixedForm');
+ for(const k of ['id','name','category','amount'])f.elements[k].value=String(item[k]??'');
+ f.elements.startMonth.value=validMonth(item.startMonth)?item.startMonth:(document.getElementById('budgetMonth').value||currentMonth);
+ f.elements.repeat.value=item.repeat==='once'?'once':'monthly';
+ f.elements.endMonth.value=validMonth(item.endMonth)?item.endMonth:'';
+ syncFixedRepeat();document.getElementById('fixedSubmit').textContent='고정비 수정 저장';
+ document.getElementById('fixedCancelEdit').hidden=false;
+ document.getElementById('fixedStatus').textContent=`${item.name} 수정 중 · 조회 월을 바꾸면 편집 내용은 유지됩니다.`;
+ f.scrollIntoView({behavior:'smooth',block:'center'});f.elements.name.focus({preventScroll:true});
+});
+for(const [form,key] of [['variableForm','variable'],['loanForm','loans'],['cardForm','cards'],['savingsForm','savings']])document.getElementById(form).addEventListener('submit',e=>{e.preventDefault();const f=e.currentTarget;const o=Object.fromEntries(new FormData(f));if(key==='savings'&&o.end<o.start){alert('만기일은 시작일 이후로 입력하세요.');return}if(key==='loans'&&o.start.length!==10)return;db[key].push({...o,id:uid()});f.reset();if(key==='variable')f.elements.date.value=(document.getElementById('budgetMonth').value===currentMonth?isoLocal(today):`${document.getElementById('budgetMonth').value}-01`);if(key==='cards')f.elements.start.value=currentMonth;save()});
+// 변동금리 입력·수정은 기존 상품 객체의 rateChanges 배열에 기록합니다.
+document.addEventListener('submit',e=>{
+ const f=e.target.closest('form[data-rate-form]');if(!f)return;
+ e.preventDefault();
+ const collection=f.dataset.rateForm;
+ if(!['loans','savings'].includes(collection))return;
+ const item=db[collection].find(x=>String(x.id)===f.dataset.id);if(!item)return;
+ const data=Object.fromEntries(new FormData(f)),d=data.date,r=Number(data.rate);
+ const end=maturityDate(item);
+ const valid=validIsoDate(d)&&d>item.start&&(collection==='loans'?d<=end:d<end);
+ if(!valid){alert(`금리 변경 적용일은 시작일 이후부터 ${collection==='loans'?end:'만기일 전날'}까지 입력하세요.`);return}
+ if(!Number.isFinite(r)||r<0||r>100){alert('금리는 0% 이상 100% 이하로 입력하세요.');return}
+ if(!Array.isArray(item.rateChanges))item.rateChanges=[];
+ const same=item.rateChanges.find(c=>c.date===d);
+ if(same)same.rate=r;
+ else item.rateChanges.push({id:uid(),date:d,rate:r});
+ item.rateChanges.sort((a,b)=>a.date.localeCompare(b.date));
+ const panelKey=`${collection}:${item.id}`;
+ save();
+ const panel=[...document.querySelectorAll('details[data-rate-panel]')].find(el=>el.dataset.ratePanel===panelKey);
+ if(panel)panel.open=true;
+});
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button[data-rate-delete]');if(!b)return;
+ const collection=b.dataset.rateDelete,item=db[collection]?.find(x=>String(x.id)===b.dataset.id);
+ if(!item||!confirm('이 금리 변경 이력을 삭제할까요?'))return;
+ item.rateChanges=(item.rateChanges||[]).filter(c=>String(c.id||c.date)!==b.dataset.event);
+ const panelKey=`${collection}:${item.id}`;
+ save();
+ const panel=[...document.querySelectorAll('details[data-rate-panel]')].find(el=>el.dataset.ratePanel===panelKey);
+ if(panel)panel.open=true;
+});
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-remove]');if(!b)return;if(!confirm('해당 항목을 삭제할까요?'))return;if(b.dataset.remove==='otherIncome'&&document.getElementById('otherIncomeForm').elements.id.value===b.dataset.id)resetOtherIncomeForm();if(b.dataset.remove==='fixed'&&document.getElementById('fixedForm').elements.id.value===b.dataset.id)resetFixedForm();db[b.dataset.remove]=db[b.dataset.remove].filter(x=>String(x.id)!==b.dataset.id);save()});
+document.getElementById('budgetMonth').value=currentMonth;document.getElementById('loanMonth').value=currentMonth;rebuildYears(today.getFullYear());rebuildMoveInYears(today.getFullYear());resetMoveInForm();resetOtherIncomeForm();resetFixedForm();document.getElementById('flowYear').value=String(today.getFullYear());document.getElementById('flowYear').addEventListener('change',renderFlow);syncBudgetDraftMonths();document.querySelector('#cardForm [name=start]').value=currentMonth;refreshClock();render();setInterval(refreshClock,30000);window.addEventListener('focus',refreshClock);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshClock()});
+</script></body></html>
